@@ -31,10 +31,6 @@ return {
         }
     },
     {
-        "L3MON4D3/LuaSnip",
-        build = "make install_jsregexp"
-    },
-    {
         "hrsh7th/nvim-cmp",
         dependencies = {
             "nvim-lspconfig",
@@ -43,19 +39,43 @@ return {
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-path",
+            {
+                "saadparwaiz1/cmp_luasnip",
+                dependencies = {
+                    {
+                        "L3MON4D3/LuaSnip",
+                        build = "make install_jsregexp"
+                    }
+                }
+            }
         },
         config = function()
-            require("cmp").setup({
+            local cmp = require("cmp")
+
+            cmp.setup({
+                mapping = cmp.mapping.preset.insert({
+                    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+                    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                    ['<C-Space>'] = cmp.mapping.complete(),
+                    ['<C-e>'] = cmp.mapping.abort(),
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                }),
                 snippet = {
                     expand = function(args)
                         require("luasnip").lsp_expand(args.body)
                     end
                 },
                 sources = {
+                    { name = "luasnip" },
                     { name = "nvim_lsp" },
-                    { name = "luasnip" }
+                    { name = "buffer" }
                 }
             })
+        end
+    },
+    {
+        "williamboman/mason-lspconfig.nvim",
+        config = function()
             local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
             local lsp_attach = function(client, bufnr)
                 local opts = { buffer = bufnr, remap = false }
@@ -81,12 +101,6 @@ return {
                 end
             })
         end
-    },
-    {
-        "saadparwaiz1/cmp_luasnip",
-        dependencies = {
-            "nvim-cmp"
-        }
     },
     {
         "jay-babu/mason-null-ls.nvim",
