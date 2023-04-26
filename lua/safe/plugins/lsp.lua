@@ -134,8 +134,7 @@ return {
 
                     '-data', jdtls_installation_path .. "/jdtls_workspace/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
                 },
-                root_dir = vim.fs.dirname(vim.fs.find({ ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }, { upward = true })[1])
-                --root_dir = require('jdtls.setup').find_root({ ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" })
+                root_dir = require('jdtls.setup').find_root({ ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" })
             }
             require("jdtls").start_or_attach(config)
         end,
