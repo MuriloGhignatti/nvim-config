@@ -69,12 +69,44 @@ return {
                     end
                 },
                 sources = {
-                    { name = "luasnip" },
                     { name = "nvim_lsp" },
+                    { name = "luasnip" },
                     { name = "buffer" }
                 }
             })
         end
+    },
+    {
+        "jay-babu/mason-null-ls.nvim",
+        opts = {
+            ensure_installed = {
+                "clang_format",
+                "google_java_format",
+                "ktlint",
+                "prettier",
+                "semgrep",
+                "eslint_d",
+                "hadolint",
+                "luacheck"
+            },
+            handlers = {}
+        },
+        config = function(_, opts)
+            require("mason-null-ls").setup(opts)
+            local null_ls = require("null-ls")
+            null_ls.setup({
+            })
+        end,
+        dependencies = {
+            "mason.nvim",
+            {
+                "jose-elias-alvarez/null-ls.nvim",
+                keys = {
+                    { "<leader>f", function() vim.lsp.buf.format() end }
+                },
+            }
+        },
+        config = true
     },
     {
         "williamboman/mason-lspconfig.nvim",
@@ -101,10 +133,10 @@ return {
             require('mason-lspconfig').setup_handlers({
                 function(server_name)
                     if server_name ~= "jdtls" then
-                    require('lspconfig')[server_name].setup({
-                        capabilities = lsp_capabilities,
-                        on_attach = lsp_attach
-                    })
+                        require('lspconfig')[server_name].setup({
+                            capabilities = lsp_capabilities,
+                            on_attach = lsp_attach
+                        })
                     end
                 end,
             })
@@ -114,66 +146,171 @@ return {
         "mfussenegger/nvim-jdtls",
         ft = "java",
         config = function()
-            local jdtls_installation_path = require("mason-registry").get_package("jdtls"):get_install_path()
+            local jdtls = require("jdtls")
+            local path = {}
+            path.data_dir = vim.fn.stdpath('cache') .. '/nvim-jdtls'
+            local jdtls_install = require('mason-registry')
+                .get_package('jdtls')
+                :get_install_path()
+
+            path.java_agent = jdtls_install .. '/lombok.jar'
+            path.launcher_jar = vim.fn.glob(jdtls_install .. '/plugins/org.eclipse.equinox.launcher_*.jar')
+
+            if vim.fn.has('mac') == 1 then
+                path.platform_config = jdtls_install .. '/config_mac'
+            elseif vim.fn.has('unix') == 1 then
+                path.platform_config = jdtls_install .. '/config_linux'
+            elseif vim.fn.has('win32') == 1 then
+                path.platform_config = jdtls_install .. '/config_win'
+            end
+
+            path.bundles = {}
+
+            ---
+            -- Include java-test bundle if present
+            ---
+            local java_test_path = require('mason-registry')
+                .get_package('java-test')
+                :get_install_path()
+
+            local java_test_bundle = vim.split(
+                vim.fn.glob(java_test_path .. '/extension/server/*.jar'),
+                '\n'
+            )
+
+            if java_test_bundle[1] ~= '' then
+                vim.list_extend(path.bundles, java_test_bundle)
+            end
+
+            ---
+            -- Include java-debug-adapter bundle if present
+            ---
+            local java_debug_path = require('mason-registry')
+                .get_package('java-debug-adapter')
+                :get_install_path()
+
+            local java_debug_bundle = vim.split(
+                vim.fn.glob(java_debug_path .. '/extension/server/com.microsoft.java.debug.plugin-*.jar'),
+                '\n'
+            )
+
+            if java_debug_bundle[1] ~= '' then
+                vim.list_extend(path.bundles, java_debug_bundle)
+            end
+            local sdkman_java_candidates_path = "~/.sdkman/candidates/java/"
+            path.runtimes = {
+                {
+                    name = "JavaSE-1.8",
+                    path = vim.fn.expand(sdkman_java_candidates_path .. "8.0.302-open")
+                },
+                {
+                    name = "JavaSE-11",
+                    path = vim.fn.expand(sdkman_java_candidates_path .. "11.0.12-open")
+                },
+                {
+                    name = "JavaSE-17",
+                    path = vim.fn.expand(sdkman_java_candidates_path .. "17-open")
+                }
+            }
+            local data_dir = path.data_dir .. '/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
             local config = {
                 cmd = {
-                    '/usr/lib/jvm/java-17-openjdk/bin/java',
+                    'java',
+
                     '-Declipse.application=org.eclipse.jdt.ls.core.id1',
                     '-Dosgi.bundles.defaultStartLevel=4',
                     '-Declipse.product=org.eclipse.jdt.ls.core.product',
                     '-Dlog.protocol=true',
                     '-Dlog.level=ALL',
-                    '-Xmx1g',
+                    '-javaagent:' .. path.java_agent,
+                    '-Xms1g',
                     '--add-modules=ALL-SYSTEM',
-                    '--add-opens', 'java.base/java.util=ALL-UNNAMED',
-                    '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+                    '--add-opens',
+                    'java.base/java.util=ALL-UNNAMED',
+                    '--add-opens',
+                    'java.base/java.lang=ALL-UNNAMED',
 
-                    '-jar', jdtls_installation_path .. "/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar",
+                    '-jar',
+                    path.launcher_jar,
 
-                    '-configuration', jdtls_installation_path .. '/config_linux',
+                    '-configuration',
+                    path.platform_config,
 
-                    '-data', jdtls_installation_path .. "/jdtls_workspace/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
+                    '-data',
+                    data_dir,
                 },
-                root_dir = require('jdtls.setup').find_root({ ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" })
+                root_dir = jdtls.setup.find_root({ ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }),
+                settings = {
+                    java = {
+                        -- jdt = {
+                        --   ls = {
+                        --     vmargs = "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m"
+                        --   }
+                        -- },
+                        eclipse = {
+                            downloadSources = true,
+                        },
+                        configuration = {
+                            updateBuildConfiguration = 'interactive',
+                            runtimes = path.runtimes,
+                        },
+                        maven = {
+                            downloadSources = true,
+                        },
+                        implementationsCodeLens = {
+                            enabled = true,
+                        },
+                        referencesCodeLens = {
+                            enabled = true,
+                        },
+                        -- inlayHints = {
+                        --   parameterNames = {
+                        --     enabled = 'all' -- literals, all, none
+                        --   }
+                        -- },
+                        format = {
+                            enabled = true,
+                            -- settings = {
+                            --   profile = 'asdf'
+                            -- },
+                        }
+                    },
+                    signatureHelp = {
+                        enabled = true,
+                    },
+                    completion = {
+                        favoriteStaticMembers = {
+                            'org.hamcrest.MatcherAssert.assertThat',
+                            'org.hamcrest.Matchers.*',
+                            'org.hamcrest.CoreMatchers.*',
+                            'org.junit.jupiter.api.Assertions.*',
+                            'java.util.Objects.requireNonNull',
+                            'java.util.Objects.requireNonNullElse',
+                            'org.mockito.Mockito.*',
+                        },
+                    },
+                    contentProvider = {
+                        preferred = 'fernflower',
+                    },
+                    extendedClientCapabilities = jdtls.extendedClientCapabilities,
+                    sources = {
+                        organizeImports = {
+                            starThreshold = 9999,
+                            staticStarThreshold = 9999,
+                        }
+                    },
+                    codeGeneration = {
+                        toString = {
+                            template = '${object.className}{${member.name()}=${member.value}, ${otherMembers}}',
+                        },
+                        useBlocks = true,
+                    },
+                }
             }
-            require("jdtls").start_or_attach(config)
+            jdtls.start_or_attach(config)
         end,
         dependencies = {
             "williamboman/mason-lspconfig.nvim"
         }
-    },
-    {
-        "jay-babu/mason-null-ls.nvim",
-        opts = {
-            ensure_installed = {
-                "clang_format",
-                "google_java_format",
-                "ktlint",
-                "prettier",
-                "semgrep",
-                "eslint_d",
-                "hadolint",
-                "luacheck"
-            },
-            handlers = {}
-        },
-        config = function(_, opts)
-            require("mason-null-ls").setup({
-                opts
-            })
-            local null_ls = require("null-ls")
-            null_ls.setup({
-            })
-        end,
-        dependencies = {
-            "mason.nvim",
-            {
-                "jose-elias-alvarez/null-ls.nvim",
-                keys = {
-                    { "<leader>f", function() vim.lsp.buf.format() end }
-                },
-            }
-        },
-        config = true
     }
 }
