@@ -5,7 +5,6 @@ return {
         opts = {
             log_level = vim.log.levels.DEBUG
         },
-        --        config = true
     },
     {
         "williamboman/mason-lspconfig.nvim",
@@ -37,7 +36,6 @@ return {
         "hrsh7th/nvim-cmp",
         dependencies = {
             "nvim-lspconfig",
-            "LuaSnip",
             "mason-lspconfig.nvim",
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-nvim-lsp",
@@ -77,6 +75,12 @@ return {
         end
     },
     {
+        "jose-elias-alvarez/null-ls.nvim",
+        keys = {
+            { "<leader>f", function() vim.lsp.buf.format() end }
+        },
+    },
+    {
         "jay-babu/mason-null-ls.nvim",
         opts = {
             ensure_installed = {
@@ -84,7 +88,6 @@ return {
                 "google_java_format",
                 "ktlint",
                 "prettier",
-                "semgrep",
                 "eslint_d",
                 "hadolint",
                 "luacheck"
@@ -93,20 +96,12 @@ return {
         },
         config = function(_, opts)
             require("mason-null-ls").setup(opts)
-            local null_ls = require("null-ls")
-            null_ls.setup({
-            })
+            require("null-ls").setup()
         end,
         dependencies = {
-            "mason.nvim",
-            {
-                "jose-elias-alvarez/null-ls.nvim",
-                keys = {
-                    { "<leader>f", function() vim.lsp.buf.format() end }
-                },
-            }
-        },
-        config = true
+            "null-ls.nvim",
+            "mason.nvim"
+        }
     },
     {
         "williamboman/mason-lspconfig.nvim",
@@ -242,11 +237,6 @@ return {
                 root_dir = jdtls.setup.find_root({ ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }),
                 settings = {
                     java = {
-                        -- jdt = {
-                        --   ls = {
-                        --     vmargs = "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m"
-                        --   }
-                        -- },
                         eclipse = {
                             downloadSources = true,
                         },
