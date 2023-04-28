@@ -1,8 +1,5 @@
 return {
     {
-        "rktjmp/lush.nvim"
-    },
-    {
         -- Color scheme
         "rose-pine/neovim",
         enabled = false,
@@ -19,7 +16,20 @@ return {
         priority = 1000,
         config = function()
             vim.cmd([[colorscheme jellybeans-nvim]])
-        end
+            vim.cmd([[TransparentEnable]])
+        end,
+        dependencies = {
+            { "rktjmp/lush.nvim" },
+            {
+                "xiyaowong/transparent.nvim",
+                opts = {
+                    extra_groups = {
+                        "NormalFloat", -- plugins which have float panel such as Lazy, Mason, LspInfo
+                        "NvimTreeNormal" -- NvimTree
+                    }
+                }
+            },
+        }
     },
     {
         "m4xshen/smartcolumn.nvim",
