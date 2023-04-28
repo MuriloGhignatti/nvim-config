@@ -30,10 +30,10 @@ return {
         end,
         dependencies = { { 'nvim-tree/nvim-web-devicons' } }
     },
-    { "rcarriga/nvim-notify" },
-    { "stevearc/dressing.nvim" },
-    { "lewis6991/gitsigns.nvim" },
-    { "akinsho/toggleterm.nvim" },
+    { "rcarriga/nvim-notify", config = true },
+    { "stevearc/dressing.nvim", config = true },
+    { "lewis6991/gitsigns.nvim", config = true },
+    { "akinsho/toggleterm.nvim", config = true, cmd = "ToggleTerm" },
     {
         "lukas-reineke/indent-blankline.nvim",
         opts = {
