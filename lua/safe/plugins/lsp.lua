@@ -74,8 +74,8 @@ return {
                 },
                 formatting = {
                     format = require("lspkind").cmp_format({
-                        mode = 'symbol_text', -- show only symbol annotations
-                        maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+                        mode = 'symbol_text',  -- show only symbol annotations
+                        maxwidth = 50,         -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
                         ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
                     })
                 }
@@ -119,6 +119,7 @@ return {
                 local opts = { buffer = bufnr, remap = false }
 
                 vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+                vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, opts)
                 vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
                 vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
                 vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
@@ -162,8 +163,12 @@ return {
             if vim.fn.has('mac') == 1 then
                 path.platform_config = jdtls_install .. '/config_mac'
             elseif vim.fn.has('unix') == 1 then
+                path.jdk_bin = "/bin/java"
+                path.jdk_homes = "~/.sdkman/candidates/java/"
                 path.platform_config = jdtls_install .. '/config_linux'
             elseif vim.fn.has('win32') == 1 then
+                path.jdk_bin = "\\bin\\java"
+                path.jdk_homes = "C:\\Program Files\\Java\\"
                 path.platform_config = jdtls_install .. '/config_win'
             end
 
@@ -200,25 +205,49 @@ return {
             if java_debug_bundle[1] ~= '' then
                 vim.list_extend(path.bundles, java_debug_bundle)
             end
-            local sdkman_java_candidates_path = "~/.sdkman/candidates/java/"
+
+            local jdk_17_path = vim.split(
+                vim.fn.glob(path.jdk_homes .. '*17*'),
+                '\n')
+
+            if jdk_17_path[1] ~= "" then
+                path.jdk_17_home = jdk_17_path[1]
+            end
+
+            local jdk_11_path = vim.split(
+                vim.fn.glob(path.jdk_homes .. '*11*'),
+                '\n')
+
+            if jdk_11_path[1] ~= "" then
+                path.jdk_11_home = jdk_11_path[1]
+            end
+
+            local jdk_8_path = vim.split(
+                vim.fn.glob(path.jdk_homes .. '*1.8*'),
+                '\n')
+
+            if jdk_8_path[1] ~= "" then
+                path.jdk_8_home = jdk_8_path[1]
+            end
+
             path.runtimes = {
                 {
                     name = "JavaSE-1.8",
-                    path = vim.fn.expand(sdkman_java_candidates_path .. "8.0.302-open")
+                    path = path.jdk_8_home 
                 },
                 {
                     name = "JavaSE-11",
-                    path = vim.fn.expand(sdkman_java_candidates_path .. "11.0.12-open")
+                    path = path.jdk_11_home 
                 },
                 {
                     name = "JavaSE-17",
-                    path = vim.fn.expand(sdkman_java_candidates_path .. "17-open")
+                    path = path.jdk_17_home 
                 }
             }
             local data_dir = path.data_dir .. '/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
             local config = {
                 cmd = {
-                    'java',
+                    path.jdk_17_home .. path.jdk_bin,
 
                     '-Declipse.application=org.eclipse.jdt.ls.core.id1',
                     '-Dosgi.bundles.defaultStartLevel=4',
