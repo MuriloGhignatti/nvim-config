@@ -29,7 +29,11 @@ return {
         },
         dependencies = {
             "mason.nvim",
-            "neovim/nvim-lspconfig"
+            "neovim/nvim-lspconfig",
+            {
+                "j-hui/fidget.nvim",
+                config = true
+            }
         }
     },
     {
@@ -40,6 +44,11 @@ return {
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-path",
+            "hrsh7th/cmp-calc",
+            "hrsh7th/cmp-nvim-lsp-signature-help",
+            "hrsh7th/cmp-nvim-lsp-document-symbol",
+            "FelipeLema/cmp-async-path",
+            "hrsh7th/cmp-nvim-lua",
             "onsails/lspkind.nvim",
             {
                 "saadparwaiz1/cmp_luasnip",
@@ -70,6 +79,9 @@ return {
                 sources = {
                     { name = "nvim_lsp" },
                     { name = "luasnip" },
+                    { name = "calc" },
+                    { name = "async_path" },
+                    { name = "nvim_lua" },
                     { name = "buffer" }
                 },
                 formatting = {
@@ -79,6 +91,13 @@ return {
                         ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
                     })
                 }
+            })
+            cmp.setup.cmdline('/', {
+                sources = cmp.config.sources({
+                    { name = 'nvim_lsp_document_symbol' }
+                }, {
+                    { name = 'buffer' }
+                })
             })
         end
     },
@@ -118,6 +137,7 @@ return {
             local lsp_attach = function(client, bufnr)
                 local opts = { buffer = bufnr, remap = false }
 
+                vim.keymap.set("n", "gD", function () vim.lsp.buf.declaration() end, opts)
                 vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
                 vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, opts)
                 vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
@@ -134,7 +154,7 @@ return {
             local mason_lspconfig = require("mason-lspconfig")
             mason_lspconfig.setup(opts_lazy)
 
-            require('mason-lspconfig').setup_handlers({
+            mason_lspconfig.setup_handlers({
                 function(server_name)
                     if server_name ~= "jdtls" then
                         require('lspconfig')[server_name].setup({
@@ -149,6 +169,9 @@ return {
     {
         "mfussenegger/nvim-jdtls",
         ft = "java",
+        dependencies = {
+            "williamboman/mason-lspconfig.nvim"
+        },
         config = function()
             local jdtls = require("jdtls")
             local path = {}
@@ -233,15 +256,15 @@ return {
             path.runtimes = {
                 {
                     name = "JavaSE-1.8",
-                    path = path.jdk_8_home 
+                    path = path.jdk_8_home
                 },
                 {
                     name = "JavaSE-11",
-                    path = path.jdk_11_home 
+                    path = path.jdk_11_home
                 },
                 {
                     name = "JavaSE-17",
-                    path = path.jdk_17_home 
+                    path = path.jdk_17_home
                 }
             }
             local data_dir = path.data_dir .. '/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
@@ -328,7 +351,8 @@ return {
                     },
                     codeGeneration = {
                         toString = {
-                            template = '${object.className}{${member.name()}=${member.value}, ${otherMembers}}',
+                            template =
+                            '${object.className}{${member.name()}=${member.value}, ${otherMembers}}',
                         },
                         useBlocks = true,
                     },
@@ -336,8 +360,6 @@ return {
             }
             jdtls.start_or_attach(config)
         end,
-        dependencies = {
-            "williamboman/mason-lspconfig.nvim"
-        }
+
     }
 }
