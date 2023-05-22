@@ -17,8 +17,15 @@ return {
     },
     {
         "nvim-lualine/lualine.nvim",
-        config = true,
+        opts = {
+            sections = {
+                lualine_c = {
+                    "lsp_progress"
+                }
+            }
+        },
         dependencies = {
+            "arkav/lualine-lsp-progress",
             "nvim-tree/nvim-web-devicons"
         }
     },
