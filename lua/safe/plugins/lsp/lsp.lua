@@ -38,11 +38,6 @@ return {
     end,
 },
 {
-    "williamboman/mason.nvim",
-    config = true,
-    build = ":MasonUpdate"
-},
-{
     "hrsh7th/nvim-cmp",
     dependencies = {
         "neovim/nvim-lspconfig",
