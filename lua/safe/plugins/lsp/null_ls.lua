@@ -14,7 +14,8 @@ return {
                 "ktlint",
                 "prettier",
                 "eslint_d",
-                "hadolint"
+                "hadolint",
+                "xmlformatter"
             },
             handlers = {}
         },

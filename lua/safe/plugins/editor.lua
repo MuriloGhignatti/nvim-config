@@ -20,6 +20,10 @@ return {
         opts = {
             sections = {
                 lualine_c = {
+                    {
+                        "filename",
+                        path = 1
+                    },
                     "lsp_progress"
                 }
             }
@@ -37,8 +41,8 @@ return {
         end,
         dependencies = { { 'nvim-tree/nvim-web-devicons' } }
     },
-    { "rcarriga/nvim-notify", config = true },
-    { "stevearc/dressing.nvim", config = true },
+    { "rcarriga/nvim-notify",    config = true },
+    { "stevearc/dressing.nvim",  config = true },
     { "lewis6991/gitsigns.nvim", config = true },
     { "akinsho/toggleterm.nvim", config = true, cmd = "ToggleTerm" },
     {
