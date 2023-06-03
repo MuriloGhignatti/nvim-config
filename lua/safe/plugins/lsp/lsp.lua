@@ -38,6 +38,9 @@ return {
     end,
 },
 {
+    "mfussenegger/nvim-dap"
+},
+{
     "hrsh7th/nvim-cmp",
     dependencies = {
         "neovim/nvim-lspconfig",
@@ -55,6 +58,7 @@ return {
             dependencies = {
                 {
                     "L3MON4D3/LuaSnip",
+                    dependencies = "rafamadriz/friendly-snippets",
                     build = "make install_jsregexp"
                 }
             }
