@@ -10,23 +10,24 @@ return {
             ensure_installed = {
                 "clangd",
                 "cmake",
-                "dockerls",
-                "gradle_ls",
-                "html",
-                "cssls",
-                "jsonls",
+                "dockerfile-language-server",
+                "gradle-language-server",
+                "html-lsp",
+                "css-lsp",
+                "json-lsp",
                 "jdtls",
-                "tsserver",
-                "kotlin_language_server",
-                "lua_ls",
-                "pyright",
-                "rust_analyzer",
+                "typescript-language-server",
+                "kotlin-language-server",
+                "lua-language-server",
+                "python-lsp-server",
                 "sqlls",
-                "yamlls"
+                "yaml-language-server",
+                "lemminx"
             }
         },
         dependencies = {
             "williamboman/mason.nvim",
+            "hrsh7th/nvim-cmp"
         },
         config = function(_, opts_lazy)
             local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -43,7 +44,6 @@ return {
                 end
             end
             })
-
         end
     }
 }

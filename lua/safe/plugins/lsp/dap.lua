@@ -28,5 +28,4 @@ return {
             dap.configurations.rust = dap.configurations.cpp
         end
     },
-
 }
