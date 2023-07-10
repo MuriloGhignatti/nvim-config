@@ -10,6 +10,13 @@ return {
         config = true
     },
     {
+        "folke/trouble.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        keys = {
+            { "<leader>x", "<cmd>TroubleToggle<cr>" }
+        }
+    },
+    {
         "mbbill/undotree",
         keys = {
             { "<leader>u", vim.cmd.UndotreeToggle }
