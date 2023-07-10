@@ -13,7 +13,7 @@ return {
                 , "Open Diagnostic Window" },
                 ["[d"] = { vim.diagnostic.goto_prev, "Goto prev" },
                 ["]d"] = { vim.diagnostic.goto_next, "Goto next" },
-                ["<space>q"] = { vim.diagnostic.setloclist },
+                ["<space>q"] = { vim.diagnostic.setloclist, "Set loc list"},
             })
 
             vim.api.nvim_create_autocmd('LspAttach', {
