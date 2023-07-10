@@ -105,7 +105,7 @@ local config = {
         '-Dlog.protocol=true',
         '-Dlog.level=ALL',
         '-javaagent:' .. path.java_agent,
-        '-Xms1g',
+        '-Xms4g',
         '--add-modules=ALL-SYSTEM',
         '--add-opens',
         'java.base/java.util=ALL-UNNAMED',
@@ -141,53 +141,55 @@ local config = {
                 enabled = true,
             },
             -- inlayHints = {
-            --   parameterNames = {
-            --     enabled = 'all' -- literals, all, none
-            --   }
-            -- },
-            format = {
-                enabled = true,
-                -- settings = {
-                --   profile = 'asdf'
-                -- },
+                --   parameterNames = {
+                    --     enabled = 'all' -- literals, all, none
+                    --   }
+                    -- },
+                    format = {
+                        enabled = true,
+                        -- settings = {
+                            --   profile = 'asdf'
+                            -- },
+                        }
+                    },
+                    signatureHelp = {
+                        enabled = true,
+                    },
+                    completion = {
+                        favoriteStaticMembers = {
+                            'org.hamcrest.MatcherAssert.assertThat',
+                            'org.hamcrest.Matchers.*',
+                            'org.hamcrest.CoreMatchers.*',
+                            'org.junit.jupiter.api.Assertions.*',
+                            'java.util.Objects.requireNonNull',
+                            'java.util.Objects.requireNonNullElse',
+                            'org.mockito.Mockito.*',
+                        },
+                    },
+                    contentProvider = {
+                        preferred = 'fernflower',
+                    },
+                    extendedClientCapabilities = jdtls.extendedClientCapabilities,
+                    sources = {
+                        organizeImports = {
+                            starThreshold = 9999,
+                            staticStarThreshold = 9999,
+                        }
+                    },
+                    codeGeneration = {
+                        toString = {
+                            template =
+                            '${object.className}{${member.name()}=${member.value}, ${otherMembers}}',
+                        },
+                        useBlocks = true,
+                    },
+                },
+                on_attatch = function (client, bufnr)
+                    jdtls.setup_dap({ hotcodereplace = 'auto' })
+                end,
+                capabilities = require('cmp_nvim_lsp').default_capabilities(),
+                init_options = {
+                    bundles = path.bundles,
+                }
             }
-        },
-        signatureHelp = {
-            enabled = true,
-        },
-        completion = {
-            favoriteStaticMembers = {
-                'org.hamcrest.MatcherAssert.assertThat',
-                'org.hamcrest.Matchers.*',
-                'org.hamcrest.CoreMatchers.*',
-                'org.junit.jupiter.api.Assertions.*',
-                'java.util.Objects.requireNonNull',
-                'java.util.Objects.requireNonNullElse',
-                'org.mockito.Mockito.*',
-            },
-        },
-        contentProvider = {
-            preferred = 'fernflower',
-        },
-        extendedClientCapabilities = jdtls.extendedClientCapabilities,
-        sources = {
-            organizeImports = {
-                starThreshold = 9999,
-                staticStarThreshold = 9999,
-            }
-        },
-        codeGeneration = {
-            toString = {
-                template =
-                '${object.className}{${member.name()}=${member.value}, ${otherMembers}}',
-            },
-            useBlocks = true,
-        },
-    },
-    bundles = path.bundles,
-    on_attatch = function (client, bufnr)
-        jdtls.setup_dap({ hotcodereplace = 'auto' })
-    end,
-    capabilities = require('cmp_nvim_lsp').default_capabilities()
-}
-jdtls.start_or_attach(config)
+            jdtls.start_or_attach(config)

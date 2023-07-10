@@ -1,3 +1,10 @@
+function GetLuaSnipBuildCommand()
+   if vim.fn.has("win32") then
+       return "mingw32-make.exe"
+   else
+       return "make"
+   end
+end
 return {
     {
         "neovim/nvim-lspconfig",
@@ -59,7 +66,7 @@ return {
                 {
                     "L3MON4D3/LuaSnip",
                     dependencies = "rafamadriz/friendly-snippets",
-                    build = "make install_jsregexp"
+                    build = GetLuaSnipBuildCommand() .. " install_jsregexp"
                 }
             }
         }
