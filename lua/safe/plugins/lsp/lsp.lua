@@ -34,11 +34,12 @@ return {
                     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, getOpts("Rename"))
                     vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, getOpts("Code action"))
                     vim.keymap.set('n', 'gr', vim.lsp.buf.references, getOpts("Goto references"))
-                    vim.keymap.set('n', '<space>f', function()
-                        vim.lsp.buf.format { async = true }
-                    end, getOpts("Format buffer"))
                 end, })
             end
+        },
+        {
+            "mrded/nvim-lsp-notify",
+            config = true
         },
         {
             "mfussenegger/nvim-dap"

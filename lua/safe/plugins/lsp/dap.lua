@@ -28,4 +28,10 @@ return {
             dap.configurations.rust = dap.configurations.cpp
         end
     },
+    {
+        "rcarriga/nvim-dap-ui",
+        dependencies = {
+            "mfussenegger/nvim-dap"
+        }
+    }
 }
