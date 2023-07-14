@@ -102,12 +102,21 @@ return {
                     map('n', '<leader>hd', gs.diffthis, { desc = "Show diff" })
                     map('n', '<leader>hD', function() gs.diffthis('~') end, { desc = "Show diff against '~'" })
                     map('n', '<leader>td', gs.toggle_deleted, { desc = "Gitsigns Toggle deleted" })
-                
+
                     -- Text object
                     map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = "Gitsigns select hunk" })
                 end
             }
         end
+    },
+    {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        config = true,
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            "rcarriga/nvim-notify"
+        }
     },
     { "stevearc/dressing.nvim",  config = true },
     { "akinsho/toggleterm.nvim", config = true, cmd = "ToggleTerm" }
