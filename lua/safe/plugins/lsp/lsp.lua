@@ -1,4 +1,3 @@
-require("safe.shared")
 return {
     {
         "neovim/nvim-lspconfig",
