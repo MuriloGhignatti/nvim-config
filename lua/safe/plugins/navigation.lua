@@ -1,4 +1,3 @@
-require("safe.shared")
 return {
     {
         "nvim-telescope/telescope.nvim",

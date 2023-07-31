@@ -1,4 +1,3 @@
-require("safe.shared")
 return {
     {
         "neovim/nvim-lspconfig",
@@ -18,7 +17,7 @@ return {
 
                     local opts = { buffer = ev.buf }
                     local function getOpts(customDesc)
-                       return { buffer = ev.buf, desc = customDesc }
+                        return { buffer = ev.buf, desc = customDesc }
                     end
                     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, getOpts("Goto declaration"))
                     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, getOpts("Goto definition"))
@@ -72,7 +71,13 @@ return {
                         {
                             "L3MON4D3/LuaSnip",
                             dependencies = "rafamadriz/friendly-snippets",
-                            build = GetMakeCmd() .. " install_jsregexp"
+                            build = function ()
+                                if string.find(vim.loop.os_uname().sysname, "Windows") then
+                                    return "echo Build it on WSL"
+                                else
+                                    return "make install_jsregexp"
+                                end
+                            end
                         }
                     }
                 }
