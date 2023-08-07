@@ -1,6 +1,7 @@
 return {
     {
         "mfussenegger/nvim-dap",
+        event = "LspAttach",
         config = function()
             local dap = require("dap")
             dap.adapters.cppdbg = {

@@ -7,6 +7,7 @@ return {
     },
     {
         "xiyaowong/transparent.nvim",
+        event = "VeryLazy",
         opts = {
             extra_groups = {
                 "NormalFloat",
@@ -15,7 +16,7 @@ return {
     },
     {
         "m4xshen/smartcolumn.nvim",
-        event = "BufReadPre",
+        event = "BufAdd",
         config = true
     }
 }

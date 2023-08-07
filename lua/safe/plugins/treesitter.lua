@@ -2,6 +2,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
+        event = "BufAdd",
         opts = {
             ensure_installed = { "c", "lua", "vim", "java", "kotlin", "javascript",
             "typescript", "cpp", "cmake", "git_rebase", "gitcommit",

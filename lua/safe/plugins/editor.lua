@@ -1,5 +1,8 @@
 return {
-    { "lambdalisue/suda.vim" },
+    {
+        "lambdalisue/suda.vim",
+        cmd = { "SudaRead", "SudaWrite" }
+    },
     {
         "folke/trouble.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -15,6 +18,7 @@ return {
     },
     {
         "nvim-lualine/lualine.nvim",
+        event = "VeryLazy",
         opts = {
             sections = {
                 lualine_c = {
@@ -31,10 +35,12 @@ return {
     },
     {
         "rcarriga/nvim-notify",
+        event = "VeryLazy",
         config = true
     },
     {
         "hiphish/rainbow-delimiters.nvim",
+        event = "BufAdd",
         config = function()
             local rainbow_delimiters = require 'rainbow-delimiters'
             
@@ -61,10 +67,11 @@ return {
     },
     {
         "lukas-reineke/indent-blankline.nvim",
-        event = "BufEnter"
+        event = "BufAdd"
     },
     {
         "lewis6991/gitsigns.nvim",
+        event = "BufAdd",
         config = function()
             require("gitsigns").setup{
                 on_attach = function(bufnr)
@@ -118,6 +125,6 @@ return {
             "rcarriga/nvim-notify"
         }
     },
-    { "stevearc/dressing.nvim",  config = true },
+    { "stevearc/dressing.nvim", event = "VeryLazy", config = true },
     { "akinsho/toggleterm.nvim", config = true, cmd = "ToggleTerm" }
 }

@@ -1,6 +1,7 @@
 return {
     {
         "neovim/nvim-lspconfig",
+        event = "BufAdd",
         dependencies = {
             "folke/which-key.nvim",
         },
@@ -35,13 +36,6 @@ return {
                     vim.keymap.set('n', 'gr', vim.lsp.buf.references, getOpts("Goto references"))
                 end, })
             end
-        },
-        {
-            "mrded/nvim-lsp-notify",
-            dependencies = {
-                "rcarriga/nvim-notify"
-            },
-            config = true
         },
         {
             "mfussenegger/nvim-dap"
