@@ -77,6 +77,9 @@ return {
                                 else
                                     return "make install_jsregexp"
                                 end
+                            end,
+                            config = function ()
+                               require("luasnip.loaders.from_vscode").lazy_load()
                             end
                         }
                     }
@@ -130,9 +133,10 @@ return {
                         { name = "nvim_lsp" },
                         { name = "luasnip" },
                         { name = "nvim_lsp_signature_help" },
+                        { name = "path" },
                         { name = "calc" },
                         { name = "nvim_lua" },
-                        { name = "buffer" }
+                        { name = "buffer", group_index = 2 }
                     },
                     formatting = {
                         format = require("lspkind").cmp_format({
@@ -164,9 +168,18 @@ return {
                     })
                 })
                 cmp.event:on(
-                    'confirm_done',
-                    cmp_autopairs.on_confirm_done()
+                'confirm_done',
+                cmp_autopairs.on_confirm_done()
                 )
             end
+        },
+        {
+            "nvimdev/lspsaga.nvim",
+            config = true,
+            event = "LspAttach",
+            dependencies = {
+                'nvim-treesitter/nvim-treesitter',
+                'nvim-tree/nvim-web-devicons'
+            }
         }
     }
