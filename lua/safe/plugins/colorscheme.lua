@@ -1,18 +1,21 @@
 return {
     {
-        "rose-pine/neovim",
-        config = function()
-            vim.cmd('colorscheme rose-pine')
-        end
-    },
-    {
         "xiyaowong/transparent.nvim",
-        event = "VeryLazy",
         opts = {
             extra_groups = {
                 "NormalFloat",
             }
         }
+    },
+    {
+        "rose-pine/neovim",
+        dependencies = {
+            "xiyaowong/transparent.nvim"
+        },
+        config = function()
+            vim.cmd('TransparentEnable')
+            vim.cmd('colorscheme rose-pine')
+        end
     },
     {
         "m4xshen/smartcolumn.nvim",

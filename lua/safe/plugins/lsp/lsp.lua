@@ -38,9 +38,6 @@ return {
             end
         },
         {
-            "mfussenegger/nvim-dap"
-        },
-        {
             "hrsh7th/nvim-cmp",
             event = { "InsertEnter", "CmdLineEnter" },
             dependencies = {
@@ -53,12 +50,12 @@ return {
                 "hrsh7th/cmp-nvim-lsp-signature-help",
                 "hrsh7th/cmp-nvim-lsp-document-symbol",
                 "hrsh7th/cmp-nvim-lua",
+                "onsails/lspkind.nvim",
                 {
                     "windwp/nvim-autopairs",
                     event = "InsertEnter",
                     config = true
                 },
-                "onsails/lspkind.nvim",
                 {
                     "saadparwaiz1/cmp_luasnip",
                     dependencies = {
