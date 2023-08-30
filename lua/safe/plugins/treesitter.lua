@@ -4,7 +4,7 @@ return {
         build = ":TSUpdate",
         event = "BufAdd",
         opts = {
-            ensure_installed = { "c", "lua", "vim", "java", "kotlin", "javascript",
+            ensure_installed = { "c", "go", "lua", "vim", "java", "kotlin", "javascript",
             "typescript", "cpp", "cmake", "git_rebase", "gitcommit",
             "gitignore", "html", "json5", "latex", "make", "markdown",
             "markdown_inline", "python", "regex", "sql", "yaml"

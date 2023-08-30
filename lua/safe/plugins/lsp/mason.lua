@@ -36,13 +36,13 @@ return {
             mason_lspconfig.setup(opts_lazy)
 
             mason_lspconfig.setup_handlers({
-                function(server_name)
+                ["*"] = function(server_name)
                     if server_name ~= "jdtls" then
-                    require('lspconfig')[server_name].setup({
-                        capabilities = lsp_capabilities,
-                    })
+                        require('lspconfig')[server_name].setup({
+                            capabilities = lsp_capabilities,
+                        })
+                    end
                 end
-            end
             })
         end
     }
