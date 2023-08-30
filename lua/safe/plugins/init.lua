@@ -1,3 +1,3 @@
 return {
-    {import = "safe.plugins.lsp"}
+     {import = "safe.plugins.lsp"}
 }

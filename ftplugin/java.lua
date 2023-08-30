@@ -141,55 +141,55 @@ local config = {
                 enabled = true,
             },
             -- inlayHints = {
-                --   parameterNames = {
-                    --     enabled = 'all' -- literals, all, none
-                    --   }
-                    -- },
-                    format = {
-                        enabled = true,
-                        -- settings = {
-                            --   profile = 'asdf'
-                            -- },
-                        }
-                    },
-                    signatureHelp = {
-                        enabled = true,
-                    },
-                    completion = {
-                        favoriteStaticMembers = {
-                            'org.hamcrest.MatcherAssert.assertThat',
-                            'org.hamcrest.Matchers.*',
-                            'org.hamcrest.CoreMatchers.*',
-                            'org.junit.jupiter.api.Assertions.*',
-                            'java.util.Objects.requireNonNull',
-                            'java.util.Objects.requireNonNullElse',
-                            'org.mockito.Mockito.*',
-                        },
-                    },
-                    contentProvider = {
-                        preferred = 'fernflower',
-                    },
-                    extendedClientCapabilities = jdtls.extendedClientCapabilities,
-                    sources = {
-                        organizeImports = {
-                            starThreshold = 9999,
-                            staticStarThreshold = 9999,
-                        }
-                    },
-                    codeGeneration = {
-                        toString = {
-                            template =
-                            '${object.className}{${member.name()}=${member.value}, ${otherMembers}}',
-                        },
-                        useBlocks = true,
-                    },
-                },
-                on_attatch = function (client, bufnr)
-                    jdtls.setup_dap({ hotcodereplace = 'auto' })
-                end,
-                capabilities = require('cmp_nvim_lsp').default_capabilities(),
-                init_options = {
-                    bundles = path.bundles,
-                }
+            --   parameterNames = {
+            --     enabled = 'all' -- literals, all, none
+            --   }
+            -- },
+            format = {
+                enabled = true,
+                -- settings = {
+                --   profile = 'asdf'
+                -- },
             }
-            jdtls.start_or_attach(config)
+        },
+        signatureHelp = {
+            enabled = true,
+        },
+        completion = {
+            favoriteStaticMembers = {
+                'org.hamcrest.MatcherAssert.assertThat',
+                'org.hamcrest.Matchers.*',
+                'org.hamcrest.CoreMatchers.*',
+                'org.junit.jupiter.api.Assertions.*',
+                'java.util.Objects.requireNonNull',
+                'java.util.Objects.requireNonNullElse',
+                'org.mockito.Mockito.*',
+            },
+        },
+        contentProvider = {
+            preferred = 'fernflower',
+        },
+        extendedClientCapabilities = jdtls.extendedClientCapabilities,
+        sources = {
+            organizeImports = {
+                starThreshold = 9999,
+                staticStarThreshold = 9999,
+            }
+        },
+        codeGeneration = {
+            toString = {
+                template =
+                '${object.className}{${member.name()}=${member.value}, ${otherMembers}}',
+            },
+            useBlocks = true,
+        },
+    },
+    on_attatch = function (client, bufnr)
+        jdtls.setup_dap({ hotcodereplace = 'auto' })
+    end,
+    capabilities = require('cmp_nvim_lsp').default_capabilities(),
+    init_options = {
+        bundles = path.bundles,
+    }
+}
+jdtls.start_or_attach(config)
