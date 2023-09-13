@@ -1,55 +1,24 @@
 return {
-    "mhartington/formatter.nvim",
-    config = function()
-        require("formatter").setup{
-            filetype = {
-                c = {
-                    require("formatter.filetypes.c")
-                },
-                cmake = {
-                    require("formatter.filetypes.cmake")
-                },
-                cpp = {
-                    require("formatter.filetypes.cpp")
-                },
-                h = cpp,
-                java = {
-                    require("formatter.filetypes.java")
-                },
-                js = {
-                    require("formatter.filetypes.javascript")
-                },
-                json = {
-                    require("formatter.filetypes.json")
-                },
-
-                kt = {
-                    require("formatter.filetypes.kotlin")
-                },
-                kts = kt,
-                lua = {
-                    require("formatter.filetypes.lua")
-                },
-                md = {
-                    require("formatter.filetypes.markdown")
-                },
-                python = {
-                    require("formatter.filetypes.python")
-                },
-                sh = {
-                    require("formatter.filetypes.sh")
-                },
-                ts = {
-                    require("formatter.filetypes.typescript")
-                },
-                yml = {
-                    require("formatter.filetypes.yaml")
-                }
-            }
+    "stevearc/conform.nvim",
+    opts = {
+        formatters_by_ft = {
+            sh = { "beautysh"},
+            bash = { "beautysh"},
+            c = { "clang_format" },
+            cpp = { "clang_format" },
+            java = { "clang_format" },
+            lua = { "stylua" },
+            go = { "gofumpt" },
+            html = { "prettierd" },
+            javascript = { "prettierd" },
+            typescript = { "prettierd" },
+            markdown = { "prettierd" },
+            json = { "prettierd" },
+            yaml = { "prettierd" }
         }
-    end,
+    },
     keys = {
-        { "<leader>f", "<cmd>Format<cr>", "Format buffer"},
-        { "<leader>F", "<cmd>FormatWrite<cr>", "Write and Format buffer"}
+        { "<leader>f", function()
+            require("conform").format() end, desc = "Format current buffer"}
     }
 }
