@@ -11,12 +11,11 @@ path.launcher_jar = vim.fn.glob(jdtls_install .. '/plugins/org.eclipse.equinox.l
 if vim.fn.has('mac') == 1 then
     path.platform_config = jdtls_install .. '/config_mac'
 elseif vim.fn.has('unix') == 1 then
-    path.jdk_bin = "/bin/java"
-    path.jdk_homes = "~/.sdkman/candidates/java/"
+    path.jdk_bin = "/usr/bin/java"
+    path.jdk_homes = "/lib/jvm/"
     path.platform_config = jdtls_install .. '/config_linux'
 elseif vim.fn.has('win32') == 1 then
     local current_java_home = os.getenv("JAVA_HOME")
-    path.jdk_bin = "\\bin\\java"
     path.jdk_homes = string.sub(current_java_home, 1, current_java_home:match '^.*()\\')
     path.platform_config = jdtls_install .. '/config_win'
 end
@@ -79,6 +78,10 @@ if jdk_8_path[1] ~= "" then
     path.jdk_8_home = jdk_8_path[1]
 end
 
+if vim.fn.has("win32") == 1  then
+    path.jdk_bin = path.jdk_17_home "\\bin\\java"
+end
+
 path.runtimes = {
     {
         name = "JavaSE-1.8",
@@ -97,7 +100,7 @@ local data_dir = path.data_dir .. '/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p
 
 local config = {
     cmd = {
-        path.jdk_17_home .. path.jdk_bin,
+        path.jdk_bin,
 
         '-Declipse.application=org.eclipse.jdt.ls.core.id1',
         '-Dosgi.bundles.defaultStartLevel=4',

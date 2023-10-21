@@ -13,6 +13,7 @@ return {
             javascript = { "prettierd" },
             typescript = { "prettierd" },
             markdown = { "prettierd" },
+            xml = { "xmlformat" },
             json = { "prettierd" },
             yaml = { "prettierd" }
         }
