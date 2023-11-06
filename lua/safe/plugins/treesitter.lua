@@ -4,6 +4,9 @@ return {
 		build = ":TSUpdate",
 		event = "BufAdd",
 		config = function()
+            if vim.fn.has('win') == 1 then
+                require("nvim-treesitter.install").prefer_git = false
+            end
 			require("nvim-treesitter.configs").setup({
 				ensure_installed = {
 					"c",
