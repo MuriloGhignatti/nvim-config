@@ -8,13 +8,13 @@ return {
         }
     },
     {
-        "rose-pine/neovim",
+        "kepano/flexoki-neovim",
         dependencies = {
             "xiyaowong/transparent.nvim"
         },
         config = function()
             vim.cmd('TransparentEnable')
-            vim.cmd('colorscheme rose-pine')
+            vim.cmd('colorscheme flexoki-dark')
         end
     },
     {
