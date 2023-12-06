@@ -24,8 +24,17 @@ return {
                 lualine_c = {
                     {
                         "filename",
-                        path = 1
+                        path = 0
                     },
+                },
+                lualine_x = {
+                    "encoding",
+                    "fileformat",
+                    {
+                        "filetype",
+                        colored = true,
+                        icon_only = true
+                    }
                 }
             }
         },

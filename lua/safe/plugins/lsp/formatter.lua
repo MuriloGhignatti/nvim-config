@@ -2,8 +2,9 @@ return {
     "stevearc/conform.nvim",
     opts = {
         formatters_by_ft = {
-            sh = { "beautysh"},
-            bash = { "beautysh"},
+            sh = { "beautysh" },
+            bash = { "beautysh" },
+            rust = { "rustfmt" },
             c = { "clang_format" },
             cpp = { "clang_format" },
             java = { "clang_format" },
