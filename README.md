@@ -18,4 +18,3 @@ This is my current neovim config, please make sure the below packages are instal
 * python3
 * python3-venv
 * go
-* npm
