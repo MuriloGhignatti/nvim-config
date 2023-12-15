@@ -16,6 +16,7 @@ return {
             markdown = { "prettierd" },
             xml = { "xmlformat" },
             json = { "prettierd" },
+            python = { "black" },
             yaml = { "prettierd" }
         }
     },

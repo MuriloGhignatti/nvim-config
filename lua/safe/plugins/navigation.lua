@@ -59,5 +59,9 @@ return {
             { "<C-e>",     function() require("harpoon.ui").nav_file(3) end, desc = "Go to third harpoon file"},
             { "<C-r>",     function() require("harpoon.ui").nav_file(4) end, desc = "Go to fourth harpoon file"}
         }
+    },
+    {
+        "christoomey/vim-tmux-navigator",
+        lazy = false
     }
 }

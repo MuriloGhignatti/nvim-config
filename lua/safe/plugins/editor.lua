@@ -1,139 +1,160 @@
 return {
-    {
-        "lambdalisue/suda.vim",
-        cmd = { "SudaRead", "SudaWrite" }
-    },
-    {
-        "folke/trouble.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        keys = {
-            { "<leader>x", "<cmd>TroubleToggle<cr>" }
-        }
-    },
-    {
-        "mbbill/undotree",
-        keys = {
-            { "<leader>u", vim.cmd.UndotreeToggle }
-        }
-    },
-    {
-        "nvim-lualine/lualine.nvim",
-        event = "VeryLazy",
-        opts = {
-            sections = {
-                lualine_c = {
-                    {
-                        "filename",
-                        path = 0
-                    },
-                },
-                lualine_x = {
-                    "encoding",
-                    "fileformat",
-                    {
-                        "filetype",
-                        colored = true,
-                        icon_only = true
-                    }
-                }
-            }
-        },
-        dependencies = {
-            "nvim-tree/nvim-web-devicons"
-        }
-    },
-    {
-        "rcarriga/nvim-notify",
-        event = "VeryLazy",
-        config = true
-    },
-    {
-        "hiphish/rainbow-delimiters.nvim",
-        event = "BufAdd",
-        config = function()
-            local rainbow_delimiters = require 'rainbow-delimiters'
-            
-            vim.g.rainbow_delimiters = {
-                strategy = {
-                    [''] = rainbow_delimiters.strategy['global'],
-                    vim = rainbow_delimiters.strategy['local'],
-                },
-                query = {
-                    [''] = 'rainbow-delimiters',
-                    lua = 'rainbow-blocks',
-                },
-                highlight = {
-                    'RainbowDelimiterRed',
-                    'RainbowDelimiterYellow',
-                    'RainbowDelimiterBlue',
-                    'RainbowDelimiterOrange',
-                    'RainbowDelimiterGreen',
-                    'RainbowDelimiterViolet',
-                    'RainbowDelimiterCyan',
-                },
-            }
-        end
-    },
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        event = "BufAdd"
-    },
-    {
-        "lewis6991/gitsigns.nvim",
-        event = "BufAdd",
-        config = function()
-            require("gitsigns").setup{
-                on_attach = function(bufnr)
-                    local gs = package.loaded.gitsigns
+	{
+		"lambdalisue/suda.vim",
+		cmd = { "SudaRead", "SudaWrite" },
+	},
+	{
+		"folke/trouble.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		keys = {
+			{ "<leader>x", "<cmd>TroubleToggle<cr>" },
+		},
+	},
+	{
+		"mbbill/undotree",
+		keys = {
+			{ "<leader>u", vim.cmd.UndotreeToggle },
+		},
+	},
+	{
+		"nvim-lualine/lualine.nvim",
+		event = "VeryLazy",
+		config = function(opts)
+			local theme = require("lualine.themes.auto")
+			theme.normal.c.bg = "None"
+			require("lualine").setup(opts)
+		end,
+		opts = {
+			sections = {
+				lualine_c = {
+					{
+						"filename",
+						path = 0,
+					},
+				},
+				lualine_x = {
+					"encoding",
+					"fileformat",
+					{
+						"filetype",
+						colored = true,
+						icon_only = true,
+					},
+				},
+			},
+		},
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
+	},
+	{
+		"rcarriga/nvim-notify",
+		event = "VeryLazy",
+		config = true,
+	},
+	{
+		"hiphish/rainbow-delimiters.nvim",
+		event = "BufAdd",
+		config = function()
+			local rainbow_delimiters = require("rainbow-delimiters")
 
-                    local function map(mode, l, r, opts)
-                        opts = opts or {}
-                        opts.buffer = bufnr
-                        vim.keymap.set(mode, l, r, opts)
-                    end
+			vim.g.rainbow_delimiters = {
+				strategy = {
+					[""] = rainbow_delimiters.strategy["global"],
+					vim = rainbow_delimiters.strategy["local"],
+				},
+				query = {
+					[""] = "rainbow-delimiters",
+					lua = "rainbow-blocks",
+				},
+				highlight = {
+					"RainbowDelimiterRed",
+					"RainbowDelimiterYellow",
+					"RainbowDelimiterBlue",
+					"RainbowDelimiterOrange",
+					"RainbowDelimiterGreen",
+					"RainbowDelimiterViolet",
+					"RainbowDelimiterCyan",
+				},
+			}
+		end,
+	},
+	{
+		"lukas-reineke/indent-blankline.nvim",
+		event = "BufAdd",
+	},
+	{
+		"lewis6991/gitsigns.nvim",
+		event = "BufAdd",
+		config = function()
+			require("gitsigns").setup({
+				on_attach = function(bufnr)
+					local gs = package.loaded.gitsigns
 
-                    map('n', ']c', function()
-                        if vim.wo.diff then return ']c' end
-                        vim.schedule(function() gs.next_hunk() end)
-                        return '<Ignore>'
-                    end, {expr=true, desc="Gitsigns next hunk"})
+					local function map(mode, l, r, opts)
+						opts = opts or {}
+						opts.buffer = bufnr
+						vim.keymap.set(mode, l, r, opts)
+					end
 
-                    map('n', '[c', function()
-                      if vim.wo.diff then return '[c' end
-                      vim.schedule(function() gs.prev_hunk() end)
-                      return '<Ignore>'
-                    end, {expr=true, desc="Gitsigns prev hunk"})
-                
-                    -- Actions
-                    map('n', '<leader>hs', gs.stage_hunk, { desc = "Gitsigns stage hunk" })
-                    map('n', '<leader>hr', gs.reset_hunk, { desc = "Gitsigns reset hunk" })
-                    map('v', '<leader>hs', function() gs.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end, { desc = "Gitsigns stage hunk" })
-                    map('v', '<leader>hr', function() gs.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end, { desc = "Gitsigns reset hunk" })
-                    map('n', '<leader>hS', gs.stage_buffer, { desc = "Stage buffer" })
-                    map('n', '<leader>hu', gs.undo_stage_hunk, { desc = "Undo stage hunk"})
-                    map('n', '<leader>hR', gs.reset_buffer, { desc = "Reset buffer" })
-                    map('n', '<leader>hp', gs.preview_hunk, { desc = "Gitsigns preview hunk" })
-                    map('n', '<leader>hb', function() gs.blame_line{full=true} end, { desc = "Blame line" })
-                    map('n', '<leader>tb', gs.toggle_current_line_blame, { desc = "Toggle blame line" })
-                    map('n', '<leader>hd', gs.diffthis, { desc = "Show diff" })
-                    map('n', '<leader>hD', function() gs.diffthis('~') end, { desc = "Show diff against '~'" })
-                    map('n', '<leader>td', gs.toggle_deleted, { desc = "Gitsigns Toggle deleted" })
+					map("n", "]c", function()
+						if vim.wo.diff then
+							return "]c"
+						end
+						vim.schedule(function()
+							gs.next_hunk()
+						end)
+						return "<Ignore>"
+					end, { expr = true, desc = "Gitsigns next hunk" })
 
-                    -- Text object
-                    map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = "Gitsigns select hunk" })
-                end
-            }
-        end
-    },
-    {
-        "folke/noice.nvim",
-        event = "VeryLazy",
-        config = true,
-        dependencies = {
-            "MunifTanjim/nui.nvim",
-            "rcarriga/nvim-notify"
-        }
-    },
-    { "stevearc/dressing.nvim", event = "VeryLazy", config = true },
-    { "akinsho/toggleterm.nvim", config = true, cmd = "ToggleTerm" }
+					map("n", "[c", function()
+						if vim.wo.diff then
+							return "[c"
+						end
+						vim.schedule(function()
+							gs.prev_hunk()
+						end)
+						return "<Ignore>"
+					end, { expr = true, desc = "Gitsigns prev hunk" })
+
+					-- Actions
+					map("n", "<leader>hs", gs.stage_hunk, { desc = "Gitsigns stage hunk" })
+					map("n", "<leader>hr", gs.reset_hunk, { desc = "Gitsigns reset hunk" })
+					map("v", "<leader>hs", function()
+						gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+					end, { desc = "Gitsigns stage hunk" })
+					map("v", "<leader>hr", function()
+						gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+					end, { desc = "Gitsigns reset hunk" })
+					map("n", "<leader>hS", gs.stage_buffer, { desc = "Stage buffer" })
+					map("n", "<leader>hu", gs.undo_stage_hunk, { desc = "Undo stage hunk" })
+					map("n", "<leader>hR", gs.reset_buffer, { desc = "Reset buffer" })
+					map("n", "<leader>hp", gs.preview_hunk, { desc = "Gitsigns preview hunk" })
+					map("n", "<leader>hb", function()
+						gs.blame_line({ full = true })
+					end, { desc = "Blame line" })
+					map("n", "<leader>tb", gs.toggle_current_line_blame, { desc = "Toggle blame line" })
+					map("n", "<leader>hd", gs.diffthis, { desc = "Show diff" })
+					map("n", "<leader>hD", function()
+						gs.diffthis("~")
+					end, { desc = "Show diff against '~'" })
+					map("n", "<leader>td", gs.toggle_deleted, { desc = "Gitsigns Toggle deleted" })
+
+					-- Text object
+					map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Gitsigns select hunk" })
+				end,
+			})
+		end,
+	},
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		config = true,
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+		},
+	},
+	{ "stevearc/dressing.nvim", event = "VeryLazy", config = true },
+	{ "akinsho/toggleterm.nvim", config = true, cmd = "ToggleTerm" },
 }
