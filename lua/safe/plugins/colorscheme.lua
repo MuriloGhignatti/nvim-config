@@ -48,7 +48,6 @@ return {
 			transparent = vim.g.transparent_enabled,
 		},
 		config = function(opts)
-			vim.cmd("TransparentEnable")
 			require("kanagawa").setup(opts)
 			vim.cmd("colorscheme kanagawa-dragon")
 		end,
