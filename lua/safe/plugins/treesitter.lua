@@ -1,52 +1,16 @@
 return {
-	{
-		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
-		event = "BufAdd",
-		config = function()
-            if vim.fn.has('win') == 1 then
-                require("nvim-treesitter.install").prefer_git = false
-            end
-			require("nvim-treesitter.configs").setup({
-				ensure_installed = {
-					"c",
-					"cpp",
-					"csv",
-					"git_config",
-					"git_rebase",
-					"gitattributes",
-					"gitcommit",
-					"gitignore",
-					"go",
-					"groovy",
-					"html",
-					"java",
-					"json",
-					"json5",
-					"kotlin",
-					"latex",
-					"lua",
-					"luadoc",
-					"markdown",
-					"python",
-					"sql",
-					"xml",
-					"yaml",
-				},
-				sync_install = false,
-				auto_install = true,
-				highlight = {
-					enable = true,
-					additional_vim_regex_highlighting = false,
-				},
-			})
-		end,
-	},
-	{
-		"nvim-treesitter/nvim-treesitter-context",
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-		},
-		config = true,
-	},
+	"nvim-treesitter/nvim-treesitter",
+	build = ":TSUpdate",
+	config = function()
+		-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
+
+		---@diagnostic disable-next-line: missing-fields
+		require("nvim-treesitter.configs").setup({
+			ensure_installed = { "bash", "c", "html", "lua", "markdown", "vim", "vimdoc" },
+			-- Autoinstall languages that are not installed
+			auto_install = true,
+			highlight = { enable = true },
+			indent = { enable = true },
+		})
+	end,
 }
