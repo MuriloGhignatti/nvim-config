@@ -9,7 +9,7 @@ function os_specific()
 		path.platform_config = jdtls_install .. "/config_mac"
 	elseif vim.fn.has("unix") == 1 then
 		path.jdk_homes = "$HOME/.sdkman/candidates/java/"
-		path.jdk_bin = path.jdk_homes .. "current/bin/java"
+		path.jdk_bin = "/bin/java"
 		path.platform_config = jdtls_install .. "/config_linux"
 	elseif vim.fn.has("win32") == 1 then
 		local current_java_home = os.getenv("JAVA_HOME")
@@ -56,6 +56,7 @@ function jdk_paths()
 
 	if jdk_17_path[1] ~= "" then
 		path.jdk_17_home = jdk_17_path[1]
+		path.jdk_17_bin = path.jdk_17_home .. path.jdk_bin
 	end
 
 	local jdk_11_path = vim.split(vim.fn.glob(path.jdk_homes .. "*11*"), "\n")
@@ -101,7 +102,7 @@ runtimes()
 
 local config = {
 	cmd = {
-		"java",
+		path.jdk_17_bin,
 
 		"-Declipse.application=org.eclipse.jdt.ls.core.id1",
 		"-Dosgi.bundles.defaultStartLevel=4",

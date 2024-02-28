@@ -56,6 +56,20 @@ return {
 			vim.keymap.set("n", "<leader>sn", function()
 				builtin.find_files({ cwd = vim.fn.stdpath("config") })
 			end, { desc = "[S]earch [N]eovim files" })
+
+			-- Search java files
+			vim.keymap.set("n", "<leader>jc", function()
+				require("telescope.builtin").find_files({
+					prompt_title = "< Java Classes >",
+					cwd = vim.fn.getcwd(),
+					find_command = { "rg", "--files", "--type", "java", "--glob", "!*.properties" }, -- Use ripgrep to find .java files and exclude .properties files
+					path_display = function(opts, path)
+						local tail = require("telescope.utils").path_tail(path)
+						return tail:match("(.*).java") -- Remove .java extension
+					end,
+					previewer = true,
+				})
+			end, { desc = "Find java classes" })
 		end,
 	},
 }
