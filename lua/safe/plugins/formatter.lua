@@ -3,10 +3,6 @@ return {
 		"stevearc/conform.nvim",
 		opts = {
 			notify_on_error = false,
-			format_on_save = {
-				timeout_ms = 500,
-				lsp_fallback = true,
-			},
 			formatters_by_ft = {
 				sh = { "beautysh" },
 				bash = { "beautysh" },
@@ -24,6 +20,20 @@ return {
 				json = { "prettierd" },
 				python = { "black" },
 				yaml = { "prettierd" },
+			},
+			formatters = {
+				xmlformat = {
+					prepend_args = { "--blanks", "--indent", "4" },
+				},
+			},
+		},
+		keys = {
+			{
+				"<leader>f",
+				function()
+					require("conform").format()
+				end,
+				desc = "[F]ormat current buffer",
 			},
 		},
 	},
