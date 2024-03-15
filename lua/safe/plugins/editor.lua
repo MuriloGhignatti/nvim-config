@@ -9,11 +9,13 @@ return {
 		"nvim-lualine/lualine.nvim",
 		event = "VeryLazy",
 		config = function(opts)
-			local theme = require("lualine.themes.auto")
-			theme.normal.c.bg = "None"
+			vim.print(opts)
 			require("lualine").setup(opts)
 		end,
 		opts = {
+			options = {
+				theme = require("safe.themes.kanagawa"),
+			},
 			sections = {
 				lualine_c = {
 					{
@@ -61,6 +63,14 @@ return {
 				delete = { text = "_" },
 				topdelete = { text = "‾" },
 				changedelete = { text = "~" },
+			},
+		},
+	},
+	{
+		"xiyaowong/transparent.nvim",
+		opts = {
+			extra_groups = {
+				"NormalFloat",
 			},
 		},
 	},
