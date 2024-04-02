@@ -9,7 +9,6 @@ return {
 		"nvim-lualine/lualine.nvim",
 		event = "VeryLazy",
 		config = function(opts)
-			vim.print(opts)
 			require("lualine").setup(opts)
 		end,
 		opts = {
