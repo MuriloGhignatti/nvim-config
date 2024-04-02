@@ -67,11 +67,11 @@ return {
 		},
 	},
 	{
-		"xiyaowong/transparent.nvim",
-		opts = {
-			extra_groups = {
-				"NormalFloat",
-			},
-		},
+		"fei6409/log-highlight.nvim",
+		config = true
 	},
+	{
+		"akinsho/toggleterm.nvim",
+		config = true
+	}
 }
