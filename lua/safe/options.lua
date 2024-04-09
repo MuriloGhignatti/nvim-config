@@ -9,8 +9,6 @@ vim.g.maplocalleader = " "
 
 -- Make line numbers default
 vim.opt.number = true
--- You can also add relative line numbers, for help with jumping.
---  Experiment for yourself to see if you like it!
 vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
@@ -25,6 +23,15 @@ vim.opt.showmode = false
 --  See `:help 'clipboard'`
 
 vim.opt.clipboard = "unnamedplus"
+
+-- Fixing tabs sizes
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+
+-- Auto indents new lines
+vim.opt.smartindent = true
 
 -- Enable break indent
 vim.opt.breakindent = true
@@ -62,6 +69,11 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+
+-- Remove netrw default banner/splitter
+vim.g.netrw_browse_split = 0
+vim.g.netrw_banner = 0
+vim.g.netrw_winsize = 25
 
 -- [[ Basic Keymaps ]]
 
