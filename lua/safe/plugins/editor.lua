@@ -12,9 +12,6 @@ return {
 			require("lualine").setup(opts)
 		end,
 		opts = {
-			options = {
-				theme = require("safe.themes.kanagawa"),
-			},
 			sections = {
 				lualine_c = {
 					{
@@ -67,10 +64,19 @@ return {
 	},
 	{
 		"fei6409/log-highlight.nvim",
-		config = true
+		config = true,
 	},
 	{
 		"akinsho/toggleterm.nvim",
-		config = true
-	}
+		config = true,
+	},
+	{
+		"iamcco/markdown-preview.nvim",
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		build = "cd app && npm install",
+		init = function()
+			vim.g.mkdp_filetypes = { "markdown" }
+		end,
+		ft = { "markdown" },
+	},
 }
