@@ -46,10 +46,8 @@ function debug_bundles()
 end
 
 function bundles()
-	path.bundles = {}
 	test_bundles()
 	debug_bundles()
-	print(path.bundles)
 end
 
 function jdk_paths()
