@@ -12,7 +12,7 @@ function os_specific()
 		path.jdk_bin = "/bin/java"
 		path.platform_config = jdtls_install .. "/config_linux"
 	elseif vim.fn.has("win32") == 1 then
-		local current_java_home = os.getenv("JAVA_HOME")
+		local current_java_home = os.getenv("JAVA_HOME") or ""
 		path.jdk_homes = string.sub(current_java_home, 1, current_java_home:match("^.*()\\"))
 		path.platform_config = jdtls_install .. "/config_win"
 	end
