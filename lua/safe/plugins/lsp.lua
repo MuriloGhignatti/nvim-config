@@ -187,4 +187,43 @@ return {
 			"neovim/nvim-lspconfig",
 		},
 	},
+	{
+		"folke/trouble.nvim",
+		event = "LspAttach",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+		},
+		config = function()
+			local map = function(keys, func, desc)
+				vim.keymap.set("n", keys, func, { desc = "[T]rouble " .. desc })
+			end
+			-- Toggle trouble view
+			map("<leader>tt", require("trouble").toggle, "[T]oggle")
+
+			-- Show workspace diagnostics
+			map("<leader>tw", function()
+				require("trouble").toggle("workspace_diagnostics")
+			end, "[W]orkspace Diagnostics")
+
+			-- Show document diagnostics
+			map("<leader>td", function()
+				require("trouble").toggle("document_diagnostics")
+			end, "[D]ocument Diagnostics")
+
+			-- Show quickfix
+			map("<leader>tq", function()
+				require("trouble").toggle("quickfix")
+			end, "[Q]uick Fix")
+
+			-- Show loclist
+			map("<leader>tl", function()
+				require("trouble").toggle("loclist")
+			end, "[L]oc List")
+
+			-- Show LSP Preferences
+			map("<leader>tlp", function()
+				require("trouble").toggle("lsp_references")
+			end, "[L]SP [P]references")
+		end,
+	},
 }
