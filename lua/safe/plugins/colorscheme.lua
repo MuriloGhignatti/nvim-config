@@ -1,31 +1,31 @@
 return {
-	{
-		"rebelot/kanagawa.nvim",
-		lazy = false,
-		priority = 1000,
-		config = function()
-            require('kanagawa').setup({
-                transparent = true
-            })
-			vim.cmd("colorscheme kanagawa-dragon")
-		end,
-	},
-
 	-- {
-	-- 	"rose-pine/neovim",
-	-- 	name = "rose-pine",
+	-- 	"rebelot/kanagawa.nvim",
 	-- 	lazy = false,
 	-- 	priority = 1000,
-	-- 	config = function(opts)
-	-- 		require("rose-pine").setup({
-	-- 			disable_background = true,
-	-- 		})
-	-- 		vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-	-- 		vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-	--
-	-- 		vim.cmd("colorscheme rose-pine")
+	-- 	config = function()
+	--            require('kanagawa').setup({
+	--                transparent = true
+	--            })
+	-- 		vim.cmd("colorscheme kanagawa-dragon")
 	-- 	end,
 	-- },
+
+	{
+		"rose-pine/neovim",
+		name = "rose-pine",
+		lazy = false,
+		priority = 1000,
+		config = function(opts)
+			require("rose-pine").setup({
+				disable_background = true,
+			})
+			vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+			vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+
+			vim.cmd("colorscheme rose-pine")
+		end,
+	},
 
 	-- {
 	-- 	"folke/tokyonight.nvim",
