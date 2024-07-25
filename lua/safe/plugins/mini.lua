@@ -17,6 +17,12 @@ return {
 			-- - sr)'  - [S]urround [R]eplace [)] [']
 			require("mini.surround").setup()
 
+
+            -- Activate animations in case we are not using neovide
+            if not vim.g.neovide then
+                require("mini.animate").setup()
+            end
+
 			-- Automatically add pairs
 			require("mini.pairs").setup()
 
@@ -25,8 +31,6 @@ return {
 			-- - gc to comment line or specific highlight
 			-- - gcc to comment current line
 			require("mini.comment").setup()
-
-			require("mini.animate").setup()
 		end,
 	},
 }
