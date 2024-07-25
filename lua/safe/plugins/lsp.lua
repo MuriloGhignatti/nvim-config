@@ -1,5 +1,8 @@
 return {
 	{
+		"nvim-java/nvim-java",
+	},
+	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			"williamboman/mason.nvim",
@@ -134,9 +137,6 @@ return {
 			require("mason-lspconfig").setup({
 				handlers = {
 					function(server_name)
-						if server_name == "jdtls" then
-							return
-						end
 						local server = servers[server_name] or {}
 						require("lspconfig")[server_name].setup({
 							cmd = server.cmd,
@@ -151,41 +151,6 @@ return {
 				},
 			})
 		end,
-	},
-	{
-		"mfussenegger/nvim-jdtls",
-		config = function()
-			vim.keymap.set(
-				"n",
-				"<A-o>",
-				"<Cmd>lua require'jdtls'.organize_imports()<CR>",
-				{ desc = "Organize imports" }
-			)
-			vim.keymap.set("n", "crv", "<Cmd>lua require'jdtls'.extract_variable()<CR>", { desc = "Extract variable" })
-			vim.keymap.set(
-				"v",
-				"crv",
-				"<Esc><Cmd>lua require'jdtls'.extract_variable(true)<CR>",
-				{ desc = "Extract variable" }
-			)
-			vim.keymap.set("n", "crc", "<Cmd>lua require'jdtls'.extract_constant()<CR>", { desc = "Extract constant" })
-			vim.keymap.set(
-				"v",
-				"crc",
-				"<Esc><Cmd>lua require'jdtls'.extract_constant(true)<CR>",
-				{ desc = "Extract constant" }
-			)
-			vim.keymap.set(
-				"v",
-				"crm",
-				"<Esc><Cmd>lua require'jdtls'.extract_method(true)<CR>",
-				{ desc = "Extract method" }
-			)
-		end,
-		ft = "java",
-		dependencies = {
-			"neovim/nvim-lspconfig",
-		},
 	},
 	{
 		"folke/trouble.nvim",
