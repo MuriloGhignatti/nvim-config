@@ -1,6 +1,7 @@
 return {
 	{ -- Autoformat
 		"stevearc/conform.nvim",
+        cmd = "ConformInfo",
 		opts = {
 			notify_on_error = false,
 			formatters_by_ft = {
@@ -24,6 +25,9 @@ return {
 			formatters = {
 				xmlformat = {
 					prepend_args = { "--blanks", "--indent", "4" },
+				},
+				clang_format = {
+					prepend_args = { "--style={IndentWidth: 4}" },
 				},
 			},
 		},
