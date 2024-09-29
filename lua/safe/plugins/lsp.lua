@@ -120,7 +120,7 @@ return {
 				"lemminx",
 				"pylsp",
 				"sqlls",
-				"tsserver",
+				"ts_ls",
 				"yamlls",
 
 				-- Formatters
@@ -131,6 +131,9 @@ return {
 				"prettierd",
 				"stylua",
 				"xmlformatter",
+
+                -- Debug
+                "debugpy",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
