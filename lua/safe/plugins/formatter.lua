@@ -21,6 +21,7 @@ return {
 				json = { "prettierd" },
 				python = { "black" },
 				yaml = { "prettierd" },
+                typescriptreact = { "prettierd" }
 			},
 			formatters = {
 				xmlformat = {
