@@ -104,7 +104,6 @@ return {
 						},
 					},
 				},
-				jdtls = {},
 			}
 			require("mason").setup()
 			local ensure_installed = vim.tbl_keys(servers or {})
@@ -132,8 +131,8 @@ return {
 				"stylua",
 				"xmlformatter",
 
-                -- Debug
-                "debugpy",
+				-- Debug
+				"debugpy",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -149,6 +148,7 @@ return {
 							-- by the server configuration above. Useful when disabling
 							-- certain features of an LSP (for example, turning off formatting for tsserver)
 							capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {}),
+							root_dir = server.root_dir,
 						})
 					end,
 				},
