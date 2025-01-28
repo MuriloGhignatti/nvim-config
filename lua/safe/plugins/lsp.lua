@@ -1,17 +1,32 @@
 return {
 	{
 		"nvim-java/nvim-java",
+		version = "2.1.0",
 	},
 	{
 		"neovim/nvim-lspconfig",
+		version = "1.5.0",
 		dependencies = {
-			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
-			"WhoIsSethDaniel/mason-tool-installer.nvim",
+			{
+				"williamboman/mason.nvim",
+				version = "1.10.0",
+			},
+			{
+				"williamboman/mason-lspconfig.nvim",
+				version = "1.31.0",
+			},
+			{
+				"WhoIsSethDaniel/mason-tool-installer.nvim",
+				commit = "c5e07b8",
+			},
 
 			-- Useful status updates for LSP.
 			-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-			{ "j-hui/fidget.nvim", opts = {} },
+			{
+				"j-hui/fidget.nvim",
+				version = "1.5.0",
+				config = true,
+			},
 		},
 		config = function()
 			vim.api.nvim_create_autocmd("LspAttach", {
@@ -111,7 +126,7 @@ return {
 				-- Servers
 				"clangd",
 				"cssls",
-				"cmake",
+				"neocmake",
 				"dockerls",
 				"gradle-language-server",
 				"jsonls",
@@ -135,8 +150,9 @@ return {
 				"debugpy",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
-
 			require("mason-lspconfig").setup({
+				ensure_installed = {},
+				automatic_installation = false,
 				handlers = {
 					function(server_name)
 						local server = servers[server_name] or {}
@@ -157,6 +173,7 @@ return {
 	},
 	{
 		"folke/trouble.nvim",
+		version = "3.7.0",
 		event = "LspAttach",
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",

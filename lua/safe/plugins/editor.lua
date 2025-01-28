@@ -1,12 +1,14 @@
 return {
 	{
 		"mbbill/undotree",
+        version = "6.1",
 		keys = {
 			{ "<leader>u", vim.cmd.UndotreeToggle, desc = "[U]ndotree Toggle" },
 		},
 	},
 	{
 		"nvim-lualine/lualine.nvim",
+        commit = "2a5bae9",
 		event = "VeryLazy",
 		config = function(opts)
 			require("lualine").setup(opts)
@@ -36,6 +38,7 @@ return {
 	},
 	{ -- Useful plugin to show you pending keybinds.
 		"folke/which-key.nvim",
+        version = "3.16.0",
 		event = "VimEnter", -- Sets the loading event to 'VimEnter'
 		opts = {
 			icons = {
@@ -88,6 +91,7 @@ return {
 	},
 	{
 		"lewis6991/gitsigns.nvim",
+        version = "0.9.0",
 		opts = {
 			signs = {
 				add = { text = "+" },
@@ -100,27 +104,16 @@ return {
 	},
 	{
 		"fei6409/log-highlight.nvim",
+        commit = "cd948ca",
 		config = true,
-	},
-	{
-		"akinsho/toggleterm.nvim",
-		config = true,
-	},
-	{
-		"nvimdev/dashboard-nvim",
-		event = "VimEnter",
-		config = function()
-			require("dashboard").setup({
-				-- config
-			})
-		end,
-		dependencies = { { "nvim-tree/nvim-web-devicons" } },
 	},
 	{
 		"lambdalisue/suda.vim",
+        version = "1.2.4"
 	},
 	{
 		"stevearc/oil.nvim",
+        version = "2.14.0",
 		opts = {},
 		dependencies = "nvim-tree/nvim-web-devicons",
 		keys = {

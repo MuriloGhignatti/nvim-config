@@ -1,6 +1,6 @@
 return {
-	{ -- Autoformat
 		"stevearc/conform.nvim",
+        version = "8.4.0",
         cmd = "ConformInfo",
 		opts = {
 			notify_on_error = false,
@@ -41,5 +41,4 @@ return {
 				desc = "[F]ormat current buffer",
 			},
 		},
-	},
 }

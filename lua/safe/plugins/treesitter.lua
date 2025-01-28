@@ -1,5 +1,6 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
+    commit = "043d5fb",
 	build = ":TSUpdate",
 	config = function()
 		-- [[ Configure Treesitter ]] See `:help nvim-treesitter`

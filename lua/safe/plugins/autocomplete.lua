@@ -1,23 +1,36 @@
 return {
 	{
 		"hrsh7th/nvim-cmp",
+        version = "0.0.2",
 		event = "InsertEnter",
 		dependencies = {
 			{
 				"L3MON4D3/LuaSnip",
+                version = "2.3.0",
 				build = (function()
 					if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
 						return
 					end
 					return "make install_jsregexp"
 				end)(),
+                dependencies = {
+			        "rafamadriz/friendly-snippets",
+                    commit = "efff286"
+                }
 			},
-			"saadparwaiz1/cmp_luasnip",
+            {
+			    "saadparwaiz1/cmp_luasnip",
+                commit = "98d9cb5"
+            },
+            {
+			    "hrsh7th/cmp-nvim-lsp",
+                commit = "99290b3"
+            },
+            {
+			    "hrsh7th/cmp-path",
+                commit = "91ff86c"
+            }
 
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-path",
-
-			"rafamadriz/friendly-snippets",
 		},
 		config = function()
 			-- See `:help cmp`
@@ -75,8 +88,8 @@ return {
 					end, { "i", "s" }),
 				}),
 				sources = {
-					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
+					{ name = "nvim_lsp" },
 					{ name = "path" },
 				},
 			})

@@ -4,15 +4,21 @@ return {
 		event = "VeryLazy",
 		branch = "0.1.x",
 		dependencies = {
-			"nvim-lua/plenary.nvim",
+            {
+			    "nvim-lua/plenary.nvim",
+                commit = "3707cdb"
+            },
 			{
 				"nvim-telescope/telescope-fzf-native.nvim",
+                commit = "dae2eac",
 				build = "make",
 				cond = function()
 					return vim.fn.executable("make") == 1
 				end,
 			},
-			{ "nvim-telescope/telescope-ui-select.nvim" },
+			{ "nvim-telescope/telescope-ui-select.nvim",
+              commit = "6e51d7d"
+            },
 			{ "nvim-tree/nvim-web-devicons" },
 		},
 		config = function()

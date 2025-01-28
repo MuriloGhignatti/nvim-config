@@ -1,4 +1,4 @@
--- vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "[P]roject View" })
+--vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "[P]roject View" })
 
 if vim.g.neovide then
     vim.o.guifont = "JetBrainsMono Nerd Font:h16"
