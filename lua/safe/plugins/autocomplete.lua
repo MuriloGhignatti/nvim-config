@@ -6,17 +6,15 @@ return {
 		dependencies = {
 			{
 				"L3MON4D3/LuaSnip",
-                version = "2.3.0",
-				build = (function()
-					if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
-						return
-					end
-					return "make install_jsregexp"
-				end)(),
-                dependencies = {
-			        "rafamadriz/friendly-snippets",
-                    commit = "efff286"
-                }
+                		version = "2.3.0",
+				build = "make install_jsregexp",
+				cond = function()
+					return vim.fn.executable("make") == 1
+				end,
+                		dependencies = {
+			        	"rafamadriz/friendly-snippets",
+                    			commit = "efff286"
+                		}
 			},
             {
 			    "saadparwaiz1/cmp_luasnip",
