@@ -1,12 +1,12 @@
 return {
 	{
-		"nvim-java/nvim-java",
-		version = "2.1.0",
-	},
-	{
 		"neovim/nvim-lspconfig",
 		version = "1.5.0",
 		dependencies = {
+			{
+				"nvim-java/nvim-java",
+				version = "2.1.0",
+			},
 			{
 				"williamboman/mason.nvim",
 				version = "1.10.0",
@@ -105,6 +105,36 @@ return {
 			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 			local servers = {
+				jdtls = {
+					settings = {
+						java = {
+							configuration = {
+								runtimes = {
+									{
+										name = "JavaSE-21",
+										path = "/usr/lib/jvm/java-21-openjdk-amd64",
+										default = true,
+									},
+									{
+										name = "JavaSE-17",
+										path = "/usr/lib/jvm/java-17-openjdk-amd64",
+										default = false,
+									},
+									{
+										name = "JavaSE-11",
+										path = "/usr/lib/jvm/java-11-openjdk-amd64",
+										default = false,
+									},
+									{
+										name = "JavaSE-8",
+										path = "/usr/lib/jvm/java-8-openjdk-amd64",
+										default = false,
+									},
+								},
+							},
+						},
+					},
+				},
 				lua_ls = {
 					settings = {
 						Lua = {
