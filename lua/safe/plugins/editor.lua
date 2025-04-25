@@ -1,4 +1,8 @@
 return {
+    {
+        "ThePrimeagen/vim-be-good",
+        version = "0ae3de1"
+    },
 	{
 		"mbbill/undotree",
         version = "6.1",
