@@ -63,12 +63,12 @@ return {
 	"mfussenegger/nvim-dap",
 	version = "0.9.0",
 	dependencies = {
-		"neovim/nvim-lspconfig",
 		{
 			"rcarriga/nvim-dap-ui",
 			version = "4.0.0",
 			config = true,
 		},
+		"mason-org/mason.nvim",
 	},
 	keys = {
 		{

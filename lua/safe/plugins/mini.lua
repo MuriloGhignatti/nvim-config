@@ -1,8 +1,10 @@
 return {
 	{ -- Collection of various small independent plugins/modules
 		"echasnovski/mini.nvim",
-        version = "0.14.0",
+		version = "0.16.0",
 		config = function()
+			require("mini.icons").setup()
+
 			-- Better Around/Inside textobjects
 			--
 			-- Examples:
@@ -18,14 +20,29 @@ return {
 			-- - sr)'  - [S]urround [R]eplace [)] [']
 			require("mini.surround").setup()
 
-
-            -- Activate animations in case we are not using neovide
-            if not vim.g.neovide then
-                require("mini.animate").setup()
-            end
+			-- Activate animations in case we are not using neovide
+			if not vim.g.neovide then
+				require("mini.animate").setup()
+			end
 
 			-- Automatically add pairs
 			require("mini.pairs").setup()
+
+			-- Picker similar to telescope
+			require("mini.pick").setup()
+
+			-- Code completion, substitutes nvim-cmp
+			require("mini.completion").setup()
+			local gen_loader = require("mini.snippets").gen_loader
+			require("mini.snippets").setup({
+				snippets = {
+					gen_loader.from_lang(),
+				},
+			})
+
+			require("mini.git").setup()
+			require("mini.diff").setup()
+			require("mini.statusline").setup()
 
 			-- Comments
 			--
@@ -33,5 +50,9 @@ return {
 			-- - gcc to comment current line
 			require("mini.comment").setup()
 		end,
+		dependencies = {
+			"rafamadriz/friendly-snippets",
+			commit = "572f566",
+		},
 	},
 }
