@@ -23,7 +23,7 @@ return {
 				"beautysh",
 				"black",
 				"clang-format",
-				"gofumpt",
+                { "gofumpt", condition = function () return vim.fn.executable('go') == 1 end },
 				"prettierd",
 				"stylua",
 				"xmlformatter",

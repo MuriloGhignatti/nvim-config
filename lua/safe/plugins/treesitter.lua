@@ -1,17 +1,13 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-    commit = "043d5fb",
+	lazy = false,
+	branch = "main",
 	build = ":TSUpdate",
-	config = function()
-		-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-
-		---@diagnostic disable-next-line: missing-fields
-		require("nvim-treesitter.configs").setup({
-			ensure_installed = { "bash", "c", "html", "lua", "markdown", "vim", "vimdoc" },
-			-- Autoinstall languages that are not installed
-			auto_install = true,
-			highlight = { enable = true },
-			indent = { enable = true },
-		})
-	end,
+	opts = {
+		ensure_installed = { "bash", "c", "java", "lua", "markdown", "xml" },
+		-- Autoinstall languages that are not installed
+		auto_install = true,
+		highlight = { enable = true },
+		indent = { enable = true },
+	},
 }

@@ -1,18 +1,18 @@
 return {
-    {
-        "ThePrimeagen/vim-be-good",
-        version = "0ae3de1"
-    },
+	{
+		"ThePrimeagen/vim-be-good",
+		version = "0ae3de1",
+	},
 	{
 		"mbbill/undotree",
-        version = "6.1",
+		version = "6.1",
 		keys = {
 			{ "<leader>u", vim.cmd.UndotreeToggle, desc = "[U]ndotree Toggle" },
 		},
 	},
 	{ -- Useful plugin to show you pending keybinds.
 		"folke/which-key.nvim",
-        version = "3.16.0",
+		version = "3.17.0",
 		event = "VimEnter", -- Sets the loading event to 'VimEnter'
 		opts = {
 			icons = {
@@ -60,38 +60,28 @@ return {
 				{ "<leader>s", group = "[S]earch" },
 				{ "<leader>w", group = "[W]orkspace" },
 				{ "<leader>t", group = "[T]oggle" },
-			},
-		},
-	},
-	{
-		"lewis6991/gitsigns.nvim",
-        version = "0.9.0",
-		opts = {
-			signs = {
-				add = { text = "+" },
-				change = { text = "~" },
-				delete = { text = "_" },
-				topdelete = { text = "‾" },
-				changedelete = { text = "~" },
+				{ "<leader>p", group = "[P]rojet" },
 			},
 		},
 	},
 	{
 		"fei6409/log-highlight.nvim",
-        commit = "cd948ca",
-		config = true,
+		commit = "ad14bf5",
+		opts = {},
 	},
 	{
 		"lambdalisue/suda.vim",
-        version = "1.2.4"
+		version = "1.2.4",
 	},
 	{
 		"stevearc/oil.nvim",
-        version = "2.14.0",
+		version = "2.15.0",
+		lazy = false,
 		opts = {},
 		keys = {
 			{ "<leader>o", "<CMD>Oil<CR>", desc = "[O]il navigation" },
 			{ "<leader>pv", "<CMD>Oil<CR>", desc = "[P]roject [V]iew" },
 		},
+		dependencies = { "echasnovski/mini.nvim" },
 	},
 }

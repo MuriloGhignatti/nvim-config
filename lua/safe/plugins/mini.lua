@@ -49,7 +49,59 @@ return {
 			-- - gc to comment line or specific highlight
 			-- - gcc to comment current line
 			require("mini.comment").setup()
+			require("mini.extra").setup()
 		end,
+		keys = {
+			{
+				"<leader>sf",
+				function()
+					MiniPick.builtin.files()
+				end,
+				desc = "[S]earch [F]iles",
+			},
+			{
+				"<leader>sh",
+				function()
+					MiniPick.builtin.help()
+				end,
+				desc = "[S]earch [H]elp",
+			},
+			{
+				"<leader>sk",
+				function()
+					MiniPick.builtin.keymaps()
+				end,
+				desc = "[S]earch [K]eymaps",
+			},
+			{
+				"<leader>sg",
+				function()
+					MiniPick.builtin.grep_live()
+				end,
+				desc = "[S]earch [G]rep",
+			},
+			{
+				"<leader>sd",
+				function()
+					MiniExtra.pickers.diagnostic()
+				end,
+				desc = "[S]earch [D]iagnostics",
+			},
+			{
+				"<leader>sr",
+				function()
+					MiniPick.builtin.resume()
+				end,
+				desc = "[S]earch [R]esume",
+			},
+			{
+				"<leader><leader>",
+				function()
+					MiniPick.builtin.buffers()
+				end,
+				desc = "Find existing buffers",
+			},
+		},
 		dependencies = {
 			"rafamadriz/friendly-snippets",
 			commit = "572f566",

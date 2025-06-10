@@ -2,7 +2,7 @@ return {
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
-        version = "3.0.1",
+        version = "3.0.2",
 		lazy = false,
 		priority = 1000,
 		config = function(opts)
