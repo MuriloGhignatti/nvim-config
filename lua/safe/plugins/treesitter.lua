@@ -3,11 +3,16 @@ return {
 	lazy = false,
 	branch = "main",
 	build = ":TSUpdate",
-	opts = {
-		ensure_installed = { "bash", "c", "java", "lua", "markdown", "xml" },
-		-- Autoinstall languages that are not installed
-		auto_install = true,
-		highlight = { enable = true },
-		indent = { enable = true },
-	},
+	commit = "5a70b1e",
+	config = function()
+		require("nvim-treesitter").install({ "bash", "c", "java", "lua", "markdown", "xml", "markdown_inline" })
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = { "<filetype>" },
+			callback = function()
+				vim.treesitter.start()
+				vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+				vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+			end,
+		})
+	end,
 }
