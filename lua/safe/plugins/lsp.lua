@@ -40,7 +40,7 @@ return {
 		dependencies = {
 			{
 				"mason-org/mason-lspconfig.nvim",
-				version = "2.0.0",
+				version = "2.1.0",
 				opts = {
 					automatic_enable = {
 						exclude = {
@@ -85,24 +85,30 @@ return {
 						},
 					})
 				end,
-			},
-		},
-	},
-	{
-		"nvim-java/nvim-java",
-		version = "3.0.0",
-		opts = {
-			root_markers = {
-				"settings.gradle",
-				"settings.gradle.kts",
-				"pom.xml",
-				"module.ivy",
-				"build.gradle",
-				"mvnw",
-				"gradlew",
-				"build.gradle",
-				"build.gradle.kts",
-				".git",
+				dependencies = {
+					{
+						"nvim-java/nvim-java",
+						version = "3.0.0",
+						opts = {
+							root_markers = {
+								"settings.gradle",
+								"settings.gradle.kts",
+								"pom.xml",
+								"module.ivy",
+								"build.gradle",
+								"mvnw",
+								"gradlew",
+								"build.gradle",
+								"build.gradle.kts",
+								".git",
+							},
+							java_debug_adapter = {
+								enable = true,
+								version = "0.58.2",
+							},
+						},
+					},
+				},
 			},
 		},
 	},
