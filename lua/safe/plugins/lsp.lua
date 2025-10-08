@@ -59,6 +59,9 @@ return {
 				"neovim/nvim-lspconfig",
 				version = "2.2.0",
 				config = function()
+					vim.lsp.config("clangd", {
+						filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "hpp" },
+					})
 					vim.lsp.config("jdtls", {
 						settings = {
 							java = {
@@ -66,42 +69,26 @@ return {
 									runtimes = {
 										{
 											name = "JavaSE-21",
-											path = "/usr/lib/jvm/java-21-openjdk",
-											default = true,
-										},
-										{
-											name = "JavaSE-17",
-											path = "/usr/lib/jvm/java-17-openjdk",
+											path = vim.fn.expand("$HOME/.sdkman/candidates/java/21.0.2-open"),
 											default = false,
 										},
 										{
 											name = "JavaSE-11",
-											path = "/usr/lib/jvm/java-11-openjdk",
-											default = false,
+											path = vim.fn.expand("$HOME/.sdkman/candidates/java/11.0.28-librca"),
+											default = true,
 										},
 									},
 								},
 							},
 						},
 					})
+					vim.lsp.enable("jdtls")
 				end,
 				dependencies = {
 					{
 						"nvim-java/nvim-java",
 						version = "3.0.0",
 						opts = {
-							root_markers = {
-								"settings.gradle",
-								"settings.gradle.kts",
-								"pom.xml",
-								"module.ivy",
-								"build.gradle",
-								"mvnw",
-								"gradlew",
-								"build.gradle",
-								"build.gradle.kts",
-								".git",
-							},
 							java_debug_adapter = {
 								enable = true,
 								version = "0.58.2",
