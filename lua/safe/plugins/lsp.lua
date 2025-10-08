@@ -123,6 +123,7 @@ return {
 		"folke/trouble.nvim",
 		version = "3.7.1",
 		cmd = "Trouble",
+		opts = {},
 		keys = {
 			{
 				"<leader>xx",
