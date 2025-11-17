@@ -1,3 +1,36 @@
+function getJdtlsJavaHomes()
+	local sdkman_path = vim.fn.expand("$HOME/.sdkman/candidates/java")
+	if vim.fn.isdirectory(sdkman_path) == 1 then
+		return sdkman_path
+	elseif vim.fn.executable("archlinux-java") then
+		return vim.fn.expand("/usr/lib/jvm")
+	end
+end
+
+function setupJDTLSBundles()
+	local mason_path = vim.fn.stdpath("data") .. "/mason"
+	local bundles = {
+		vim.fn.glob(
+			mason_path .. "/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar",
+			1
+		),
+	}
+
+	local java_test_bundles =
+		vim.split(vim.fn.glob(mason_path .. "/packages/java-test/extension" .. "/server/*.jar", 1), "\n")
+	local excluded = {
+		"com.microsoft.java.test.runner-jar-with-dependencies.jar",
+		"jacocoagent.jar",
+	}
+	for _, java_test_jar in ipairs(java_test_bundles) do
+		local fname = vim.fn.fnamemodify(java_test_jar, ":t")
+		if not vim.tbl_contains(excluded, fname) then
+			table.insert(bundles, java_test_jar)
+		end
+	end
+	return bundles
+end
+
 return {
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -6,6 +39,7 @@ return {
 			ensure_installed = {
 				-- Servers
 				"lua_ls",
+				"jdtls",
 				"clangd",
 				"cssls",
 				"neocmake",
@@ -42,11 +76,7 @@ return {
 				"mason-org/mason-lspconfig.nvim",
 				version = "2.1.0",
 				opts = {
-					automatic_enable = {
-						exclude = {
-							"jdtls",
-						},
-					},
+					automatic_enable = true,
 				},
 			},
 			{ "mason-org/mason.nvim", version = "2.0.0", opts = {} },
@@ -56,12 +86,10 @@ return {
 				opts = {},
 			},
 			{
-				"neovim/nvim-lspconfig",
-				version = "2.2.0",
+				"mfussenegger/nvim-jdtls",
+				commit = "38d265e",
 				config = function()
-					vim.lsp.config("clangd", {
-						filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "hpp" },
-					})
+					print(vim.fn.glob(getJdtlsJavaHomes() .. "/*11*", 1))
 					vim.lsp.config("jdtls", {
 						settings = {
 							java = {
@@ -69,33 +97,30 @@ return {
 									runtimes = {
 										{
 											name = "JavaSE-21",
-											path = vim.fn.expand("$HOME/.sdkman/candidates/java/21.0.2-open"),
-											default = false,
-										},
-										{
-											name = "JavaSE-11",
-											path = vim.fn.expand("$HOME/.sdkman/candidates/java/11.0.28-librca"),
+											path = vim.fn.glob(getJdtlsJavaHomes() .. "/*21*", 1),
 											default = true,
 										},
 									},
 								},
 							},
 						},
+						init_options = {
+							bundles = setupJDTLSBundles(),
+						},
 					})
-					vim.lsp.enable("jdtls")
 				end,
 				dependencies = {
-					{
-						"nvim-java/nvim-java",
-						version = "3.0.0",
-						opts = {
-							java_debug_adapter = {
-								enable = true,
-								version = "0.58.2",
-							},
-						},
-					},
+					"neovim/nvim-lspconfig",
 				},
+			},
+			{
+				"neovim/nvim-lspconfig",
+				version = "2.2.0",
+				config = function()
+					vim.lsp.config("clangd", {
+						filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "hpp" },
+					})
+				end,
 			},
 		},
 	},
