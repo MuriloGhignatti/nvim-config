@@ -307,7 +307,7 @@ return {
 				desc = "Search for Plugin Spec",
 			},
 			{
-				"<leader>sq",
+				"<leader>ca",
 				function()
 					Snacks.picker.qflist()
 				end,
