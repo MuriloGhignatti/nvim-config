@@ -1,6 +1,8 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+vim.diagnostic.config({ virtual_text = true })
+
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 
@@ -32,6 +34,7 @@ vim.opt.expandtab = true
 
 -- Auto indents new lines
 vim.opt.smartindent = true
+vim.opt.autoindent = true
 
 -- Enable break indent
 vim.opt.breakindent = true
@@ -69,6 +72,9 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+
+-- 24-bit colors
+vim.opt.termguicolors = true
 
 -- Remove netrw default banner/splitter
 vim.g.netrw_browse_split = 0
