@@ -1,4 +1,4 @@
-function getJdtlsJavaHomes()
+local function getJdtlsJavaHomes()
 	local sdkman_path = vim.fn.expand("$HOME/.sdkman/candidates/java")
 	if vim.fn.isdirectory(sdkman_path) == 1 then
 		return sdkman_path
@@ -7,17 +7,17 @@ function getJdtlsJavaHomes()
 	end
 end
 
-function setupJDTLSBundles()
+local function setupJDTLSBundles()
 	local mason_path = vim.fn.stdpath("data") .. "/mason"
 	local bundles = {
 		vim.fn.glob(
 			mason_path .. "/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar",
-			1
+			true
 		),
 	}
 
 	local java_test_bundles =
-		vim.split(vim.fn.glob(mason_path .. "/packages/java-test/extension" .. "/server/*.jar", 1), "\n")
+		vim.split(vim.fn.glob(mason_path .. "/packages/java-test/extension" .. "/server/*.jar", true), "\n")
 	local excluded = {
 		"com.microsoft.java.test.runner-jar-with-dependencies.jar",
 		"jacocoagent.jar",
@@ -89,7 +89,16 @@ return {
 				"mfussenegger/nvim-jdtls",
 				commit = "38d265e",
 				config = function()
-					print(vim.fn.glob(getJdtlsJavaHomes() .. "/*11*", 1))
+					print(vim.fn.glob(getJdtlsJavaHomes() .. "/*11*", true))
+					vim.lsp.config("lua_ls", {
+						settings = {
+							Lua = {
+								workspace = {
+									library = vim.api.nvim_get_runtime_file("", true),
+								},
+							},
+						},
+					})
 					vim.lsp.config("jdtls", {
 						settings = {
 							java = {
@@ -97,7 +106,7 @@ return {
 									runtimes = {
 										{
 											name = "JavaSE-21",
-											path = vim.fn.glob(getJdtlsJavaHomes() .. "/*21*", 1),
+											path = vim.fn.glob(getJdtlsJavaHomes() .. "/*21*", true),
 											default = true,
 										},
 									},
@@ -161,11 +170,6 @@ return {
 				"<leader>xL",
 				"<cmd>Trouble loclist toggle<cr>",
 				desc = "Location List (Trouble)",
-			},
-			{
-				"<leader>xQ",
-				"<cmd>Trouble qflist toggle<cr>",
-				desc = "Quickfix List (Trouble)",
 			},
 		},
 	},
