@@ -1,5 +1,8 @@
 local function setupDebuggers(dap, mason_registry)
-	local python_dap_install = mason_registry.get_package("debugpy"):get_install_path()
+	if not mason_registry.has_package("debugpy") then
+		return
+	end
+	local python_dap_install = vim.fn.exepath("debugpy")
 
 	-- Adapters
 	--
@@ -61,14 +64,14 @@ local function setupDebuggers(dap, mason_registry)
 end
 return {
 	"mfussenegger/nvim-dap",
-	version = "0.9.0",
+	version = "0.10.0",
 	dependencies = {
-		"neovim/nvim-lspconfig",
 		{
 			"rcarriga/nvim-dap-ui",
 			version = "4.0.0",
-			config = true,
+			opts = {},
 		},
+		"mason-org/mason.nvim",
 	},
 	keys = {
 		{
@@ -97,21 +100,21 @@ return {
 			function()
 				require("dap").toggle_breakpoint()
 			end,
-			"Toggle Breakpoint",
+			"Toggle [b]reakpoint",
 		},
 		{
 			"<Leader>B",
 			function()
 				require("dap").set_breakpoint()
 			end,
-			desc = "Set Breakpoint",
+			desc = "Set [B]reakpoint",
 		},
 		{
-			"<Leader>lp",
+			"<Leader>Bm",
 			function()
 				require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))
 			end,
-			desc = "Set Breakpoint with message",
+			desc = "Set [B]reakpoint with [m]essage",
 		},
 		{
 			"<Leader>dr",

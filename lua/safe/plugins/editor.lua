@@ -1,48 +1,18 @@
 return {
-    {
-        "ThePrimeagen/vim-be-good",
-        version = "0ae3de1"
-    },
+	{
+		"ThePrimeagen/vim-be-good",
+		version = "0ae3de1",
+	},
 	{
 		"mbbill/undotree",
-        version = "6.1",
+		version = "6.1",
 		keys = {
 			{ "<leader>u", vim.cmd.UndotreeToggle, desc = "[U]ndotree Toggle" },
 		},
 	},
-	{
-		"nvim-lualine/lualine.nvim",
-        commit = "2a5bae9",
-		event = "VeryLazy",
-		config = function(opts)
-			require("lualine").setup(opts)
-		end,
-		opts = {
-			sections = {
-				lualine_c = {
-					{
-						"filename",
-						path = 0,
-					},
-				},
-				lualine_x = {
-					"encoding",
-					"fileformat",
-					{
-						"filetype",
-						colored = true,
-						icon_only = true,
-					},
-				},
-			},
-		},
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-		},
-	},
 	{ -- Useful plugin to show you pending keybinds.
 		"folke/which-key.nvim",
-        version = "3.16.0",
+		version = "3.17.0",
 		event = "VimEnter", -- Sets the loading event to 'VimEnter'
 		opts = {
 			icons = {
@@ -90,39 +60,45 @@ return {
 				{ "<leader>s", group = "[S]earch" },
 				{ "<leader>w", group = "[W]orkspace" },
 				{ "<leader>t", group = "[T]oggle" },
-			},
-		},
-	},
-	{
-		"lewis6991/gitsigns.nvim",
-        version = "0.9.0",
-		opts = {
-			signs = {
-				add = { text = "+" },
-				change = { text = "~" },
-				delete = { text = "_" },
-				topdelete = { text = "‾" },
-				changedelete = { text = "~" },
+				{ "<leader>p", group = "[P]rojet" },
 			},
 		},
 	},
 	{
 		"fei6409/log-highlight.nvim",
-        commit = "cd948ca",
-		config = true,
+		commit = "ad14bf5",
+		opts = {},
 	},
 	{
 		"lambdalisue/suda.vim",
-        version = "1.2.4"
+		version = "1.2.4",
 	},
 	{
 		"stevearc/oil.nvim",
-        version = "2.14.0",
+		version = "2.15.0",
+		lazy = false,
 		opts = {},
-		dependencies = "nvim-tree/nvim-web-devicons",
 		keys = {
 			{ "<leader>o", "<CMD>Oil<CR>", desc = "[O]il navigation" },
 			{ "<leader>pv", "<CMD>Oil<CR>", desc = "[P]roject [V]iew" },
 		},
+		dependencies = { "echasnovski/mini.nvim" },
 	},
+    {
+        'saghen/blink.cmp',
+        dependencies = { 'rafamadriz/friendly-snippets' },
+        version = '1.*',
+        opts = {
+            keymap = { preset = 'default' },
+            appearance = {
+                nerd_font_variant = 'mono'
+            },
+            completion = { documentation = { auto_show = false } },
+            sources = {
+                default = { 'lsp', 'path', 'snippets', 'buffer' },
+            },
+            fuzzy = { implementation = "prefer_rust_with_warning" }
+        },
+        opts_extend = { "sources.default" }
+    },
 }
