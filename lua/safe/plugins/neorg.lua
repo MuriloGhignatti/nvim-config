@@ -1,7 +1,7 @@
 return {
 	{
 		"nvim-neorg/neorg",
-        version = "9.3.0",
+        version = "9.6.4",
         ft = "norg",
 		opts = {
 			load = {

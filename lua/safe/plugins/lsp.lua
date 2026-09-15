@@ -34,7 +34,7 @@ end
 return {
 	{
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
-		commit = "93a9ff9",
+		commit = "443f1ef",
 		opts = {
 			ensure_installed = {
 				-- Servers
@@ -74,31 +74,21 @@ return {
 		dependencies = {
 			{
 				"mason-org/mason-lspconfig.nvim",
-				version = "2.1.0",
+				version = "2.3.0",
 				opts = {
 					automatic_enable = true,
 				},
 			},
-			{ "mason-org/mason.nvim", version = "2.0.0", opts = {} },
+			{ "mason-org/mason.nvim", version = "2.3.1", opts = {} },
 			{
 				"jay-babu/mason-nvim-dap.nvim",
-				version = "2.5.1",
+				version = "2.5.2",
 				opts = {},
 			},
 			{
 				"mfussenegger/nvim-jdtls",
-				commit = "38d265e",
+				commit = "6e9d953",
 				config = function()
-					print(vim.fn.glob(getJdtlsJavaHomes() .. "/*11*", true))
-					vim.lsp.config("lua_ls", {
-						settings = {
-							Lua = {
-								workspace = {
-									library = vim.api.nvim_get_runtime_file("", true),
-								},
-							},
-						},
-					})
 					vim.lsp.config("jdtls", {
 						settings = {
 							java = {
@@ -124,10 +114,32 @@ return {
 			},
 			{
 				"neovim/nvim-lspconfig",
-				version = "2.2.0",
+				version = "2.11.0",
 				config = function()
 					vim.lsp.config("clangd", {
 						filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "hpp" },
+					})
+
+					local capabilities = vim.lsp.protocol.make_client_capabilities()
+					capabilities.textDocument.foldingRange = {
+						dynamicRegistration = false,
+						lineFoldingOnly = true,
+					}
+					local language_servers = vim.lsp.get_clients() -- or list servers manually like {'gopls', 'clangd'}
+					for _, ls in ipairs(language_servers) do
+						require("lspconfig")[ls].setup({
+							capabilities = capabilities,
+						})
+					end
+
+					vim.lsp.config("lua_ls", {
+						settings = {
+							Lua = {
+								workspace = {
+									library = vim.api.nvim_get_runtime_file("", true),
+								},
+							},
+						},
 					})
 				end,
 			},
@@ -137,7 +149,7 @@ return {
 	-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
 	{
 		"j-hui/fidget.nvim",
-		version = "1.5.0",
+		version = "2.0.0",
 		opts = {},
 	},
 	{

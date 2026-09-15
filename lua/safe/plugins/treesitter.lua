@@ -3,7 +3,7 @@ return {
 	lazy = false,
 	branch = "main",
 	build = ":TSUpdate",
-	commit = "2bd9b9b",
+	commit = "9a168f6",
 	config = function()
 		local ts = require("nvim-treesitter")
 		ts.install({ "bash", "c", "java", "lua", "markdown", "xml", "markdown_inline" })
@@ -23,9 +23,6 @@ return {
 			group = vim.api.nvim_create_augroup("ts_setup", { clear = true }),
 			callback = function(e)
 				vim.treesitter.start(e.buf)
-				vim.wo.foldmethod = "expr"
-				vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-				vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 			end,
 		})
 	end,

@@ -66,7 +66,7 @@ return {
 	},
 	{
 		"fei6409/log-highlight.nvim",
-		commit = "ad14bf5",
+		commit = "b2e00cf",
 		opts = {},
 	},
 	{
@@ -75,7 +75,7 @@ return {
 	},
 	{
 		"stevearc/oil.nvim",
-		version = "2.15.0",
+		version = "2.16.0",
 		lazy = false,
 		opts = {},
 		keys = {
@@ -84,21 +84,68 @@ return {
 		},
 		dependencies = { "echasnovski/mini.nvim" },
 	},
-    {
-        'saghen/blink.cmp',
-        dependencies = { 'rafamadriz/friendly-snippets' },
-        version = '1.*',
-        opts = {
-            keymap = { preset = 'default' },
-            appearance = {
-                nerd_font_variant = 'mono'
-            },
-            completion = { documentation = { auto_show = false } },
-            sources = {
-                default = { 'lsp', 'path', 'snippets', 'buffer' },
-            },
-            fuzzy = { implementation = "prefer_rust_with_warning" }
-        },
-        opts_extend = { "sources.default" }
-    },
+	{
+		"saghen/blink.cmp",
+		dependencies = { "rafamadriz/friendly-snippets" },
+		version = "1.*",
+		opts = {
+			keymap = { preset = "default" },
+			appearance = {
+				nerd_font_variant = "mono",
+			},
+			completion = { documentation = { auto_show = false } },
+			sources = {
+				default = { "lsp", "path", "snippets", "buffer" },
+			},
+			fuzzy = { implementation = "prefer_rust_with_warning" },
+		},
+		opts_extend = { "sources.default" },
+	},
+	{
+		"kevinhwang91/nvim-ufo",
+		dependencies = {
+			{
+				"kevinhwang91/promise-async",
+				version = "1.*",
+			},
+		},
+		version = "1.*",
+		config = function()
+			vim.o.foldcolumn = "1"
+			vim.o.foldlevel = 99
+			vim.o.foldlevelstart = 99
+			vim.o.foldenable = true
+
+			vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+			vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+
+			vim.keymap.set("n", "K", function()
+				local winid = require("ufo").peekFoldedLinesUnderCursor()
+				if not winid then
+					vim.lsp.buf.hover()
+				end
+			end)
+
+			require("ufo").setup({
+				provider_selector = function(bufnr, filetype, buftype)
+					if bt ~= "" then
+						return { "" }
+					end
+					if
+						vim.tbl_contains({
+							"oil",
+							"lazy",
+							"mason",
+							"help",
+							"checkhealth",
+							"snacks_notif",
+						}, filetype)
+					then
+						return { "" }
+					end
+					return { "lsp", "treesitter" }
+				end,
+			})
+		end,
+	},
 }

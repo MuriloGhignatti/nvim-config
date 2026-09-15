@@ -1,7 +1,7 @@
 return {
 	{ -- Collection of various small independent plugins/modules
 		"echasnovski/mini.nvim",
-		version = "0.16.0",
+		version = "0.18.0",
 		config = function()
 			require("mini.icons").setup()
 
