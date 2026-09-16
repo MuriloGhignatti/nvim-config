@@ -46,7 +46,7 @@ return {
 				"dockerls",
 				"gradle-language-server",
 				"jsonls",
-				"kotlin-language-server",
+				"kotlin-lsp",
 				"lemminx",
 				"pylsp",
 				"sqlls",
